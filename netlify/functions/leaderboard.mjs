@@ -30,25 +30,30 @@ async function writeGist(obj) {
 }
 
 export async function handler(event) {
-  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS, body: '' };
+  try {
+    if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers: CORS, body: '' };
 
-  if (event.httpMethod === 'GET') {
-    const lb = await readGist();
-    const entries = Object.values(lb)
-      .filter(e => e && e.username)
-      .sort((a, b) => b.questsDone - a.questsDone || b.xp - a.xp);
-    return { statusCode: 200, headers: CORS, body: JSON.stringify(entries) };
+    if (event.httpMethod === 'GET') {
+      const lb = await readGist();
+      const entries = Object.values(lb)
+        .filter(e => e && e.username)
+        .sort((a, b) => b.questsDone - a.questsDone || b.xp - a.xp);
+      return { statusCode: 200, headers: CORS, body: JSON.stringify(entries) };
+    }
+
+    if (event.httpMethod === 'POST') {
+      let entry;
+      try { entry = JSON.parse(event.body); } catch { return { statusCode: 400, headers: CORS, body: '[]' }; }
+      if (!entry?.username) return { statusCode: 400, headers: CORS, body: '[]' };
+      const lb = await readGist();
+      lb[entry.username] = entry;
+      await writeGist(lb);
+      return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
+    }
+
+    return { statusCode: 405, headers: CORS, body: '[]' };
+  } catch (err) {
+    console.error('leaderboard function error:', err);
+    return { statusCode: 200, headers: CORS, body: '[]' };
   }
-
-  if (event.httpMethod === 'POST') {
-    let entry;
-    try { entry = JSON.parse(event.body); } catch { return { statusCode: 400, headers: CORS, body: '{}' }; }
-    if (!entry?.username) return { statusCode: 400, headers: CORS, body: '{}' };
-    const lb = await readGist();
-    lb[entry.username] = entry;
-    await writeGist(lb);
-    return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
-  }
-
-  return { statusCode: 405, headers: CORS, body: '{"error":"method not allowed"}' };
 }
