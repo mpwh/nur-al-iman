@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Nur Al-Iman ☽</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ─── USERNAME SCREEN ─── */
+#usernameScreen{
+  position:fixed;inset:0;z-index:110;
+  background:radial-gradient(ellipse 100% 80% at 50% 40%,#0D1F3C 0%,#050A12 100%);
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:0; padding:24px;
+}
+.un-title{font-size:14px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
+.un-sub{font-size:11px;color:var(--text2);letter-spacing:2px;margin-bottom:32px;text-align:center;line-height:1.6;}
+.un-input-wrap{position:relative;width:100%;max-width:280px;margin-bottom:10px;}
+.un-input{
+  width:100%;padding:16px 18px;
+  background:rgba(180,140,60,0.06);
+  border:1px solid var(--border2);
+  color:var(--gold2);font-family:'Cinzel',serif;font-size:16px;
+  letter-spacing:2px;text-align:center;outline:none;
+  transition:all .2s;
+}
+.un-input:focus{border-color:var(--gold2);background:rgba(180,140,60,0.12);box-shadow:0 0 20px rgba(180,140,60,0.2);}
+.un-input::placeholder{color:rgba(180,140,60,0.3);}
+.un-hint{font-size:10px;color:var(--text2);margin-bottom:28px;letter-spacing:1px;}
+.un-btn{
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  color:#1A0E00;border:none;font-family:'Cinzel',serif;
+  font-size:14px;font-weight:700;letter-spacing:3px;
+  padding:16px 48px;cursor:pointer;
+  clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0% calc(100% - 8px),0% 8px);
+  transition:all .2s;margin-bottom:16px;
+}
+.un-btn:active{transform:scale(0.95);}
+.un-saved-list{width:100%;max-width:280px;}
+.un-saved-title{font-size:9px;color:var(--text2);letter-spacing:2px;margin-bottom:8px;text-align:center;}
+.un-saved-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;margin-bottom:6px;
+  background:rgba(255,255,255,0.02);border:1px solid var(--border);
+  cursor:pointer;transition:all .15s;
+}
+.un-saved-item:active{background:rgba(180,140,60,0.1);}
+.un-saved-avatar{font-size:18px;}
+.un-saved-info{flex:1;}
+.un-saved-name{font-size:12px;color:var(--text);letter-spacing:1px;}
+.un-saved-rank{font-size:9px;color:var(--text2);margin-top:2px;}
+.un-saved-score{font-size:11px;color:var(--gold);font-weight:700;}
+
+/* ─── LEADERBOARD ─── */
+#lbOverlay{
+  position:absolute;inset:0;z-index:70;
+  display:none;align-items:flex-end;
+  background:rgba(0,5,15,0.88);
+}
+#lbOverlay.open{display:flex;}
+.lb-sheet{
+  width:100%;max-height:85vh;overflow-y:auto;
+  background:#0B1428;border-top:2px solid var(--gold);
+  border-radius:16px 16px 0 0;padding-bottom:24px;
+}
+.lb-sheet::-webkit-scrollbar{width:3px;}
+.lb-sheet::-webkit-scrollbar-thumb{background:var(--gold3);}
+.lb-handle{width:36px;height:4px;background:rgba(180,140,60,0.3);margin:10px auto 0;border-radius:2px;}
+.lb-header{
+  padding:16px 20px 12px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.lb-title-wrap{display:flex;align-items:center;gap:10px;}
+.lb-trophy{font-size:24px;filter:drop-shadow(0 0 8px rgba(200,160,60,0.6));}
+.lb-title{font-size:16px;color:var(--gold2);}
+.lb-sub{font-size:10px;color:var(--text2);margin-top:2px;}
+.lb-close{
+  width:32px;height:32px;background:rgba(255,255,255,0.05);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:14px;color:var(--text2);flex-shrink:0;
+  border-radius:50%;
+}
+.lb-body{padding:12px 16px 0;}
+
+.lb-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;margin-bottom:6px;
+  background:rgba(255,255,255,0.02);border:1px solid var(--border);
+  transition:all .2s; position:relative; overflow:hidden;
+}
+.lb-row.me{
+  background:rgba(180,140,60,0.08);
+  border-color:var(--gold);
+  box-shadow:0 0 16px rgba(180,140,60,0.15);
+}
+.lb-row.me::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,rgba(180,140,60,0.05),transparent);
+}
+.lb-rank-num{
+  font-size:18px;font-weight:900;width:28px;text-align:center;flex-shrink:0;
+}
+.lb-rank-1{color:#FFD700;text-shadow:0 0 10px rgba(255,215,0,0.6);}
+.lb-rank-2{color:#C0C0C0;text-shadow:0 0 8px rgba(192,192,192,0.4);}
+.lb-rank-3{color:#CD7F32;text-shadow:0 0 8px rgba(205,127,50,0.4);}
+.lb-rank-n{color:var(--text2);}
+.lb-avatar{font-size:22px;flex-shrink:0;}
+.lb-info{flex:1;min-width:0;}
+.lb-name{font-size:13px;color:var(--text);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-rank-title{font-size:9px;color:var(--text2);margin-top:2px;}
+.lb-me-badge{font-size:8px;color:var(--gold);margin-left:6px;letter-spacing:1px;}
+.lb-scores{text-align:right;flex-shrink:0;}
+.lb-xp{font-size:14px;font-weight:700;color:var(--purple);}
+.lb-meta{font-size:9px;color:var(--text2);margin-top:2px;}
+.lb-quests{color:var(--green);}
+.lb-empty{text-align:center;padding:32px;color:var(--text2);font-size:12px;line-height:1.8;}
+
+/* Podium (top 3) */
+.lb-podium{
+  display:flex;align-items:flex-end;justify-content:center;gap:8px;
+  padding:16px 16px 8px; border-bottom:1px solid var(--border);margin-bottom:4px;
+}
+.podium-slot{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.podium-avatar{font-size:28px;filter:drop-shadow(0 0 6px rgba(200,160,60,0.4));}
+.podium-name{font-size:9px;color:var(--text);letter-spacing:1px;max-width:72px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.podium-xp{font-size:10px;font-weight:700;}
+.podium-block{width:72px;display:flex;align-items:center;justify-content:center;border-radius:2px 2px 0 0;}
+.podium-1 .podium-block{height:52px;background:linear-gradient(180deg,rgba(255,215,0,0.2),rgba(255,215,0,0.05));border:1px solid rgba(255,215,0,0.4);}
+.podium-1 .podium-xp{color:#FFD700;}
+.podium-2 .podium-block{height:36px;background:linear-gradient(180deg,rgba(192,192,192,0.15),rgba(192,192,192,0.05));border:1px solid rgba(192,192,192,0.3);}
+.podium-2 .podium-xp{color:#C0C0C0;}
+.podium-3 .podium-block{height:24px;background:linear-gradient(180deg,rgba(205,127,50,0.15),rgba(205,127,50,0.05));border:1px solid rgba(205,127,50,0.3);}
+.podium-3 .podium-xp{color:#CD7F32;}
+.podium-crown{font-size:16px;line-height:1;}
+
+/* LB button in HUD */
+#btnLb{
+  background:rgba(180,140,60,0.1);border:1px solid var(--border);
+  color:var(--gold);font-size:14px;padding:4px 10px;cursor:pointer;
+  display:flex;align-items:center;gap:4px;
+  transition:all .15s;flex-shrink:0;
+}
+#btnLb:active{background:rgba(180,140,60,0.25);}
+.lb-btn-lbl{font-size:8px;letter-spacing:1px;color:var(--text2);}
+
+
+:root{
+  --gold:#C9A84C;--gold2:#F0D080;--gold3:#7A5510;
+  --deep:#070C18;--panel:rgba(6,12,28,0.96);
+  --border:rgba(180,140,60,0.35);--border2:rgba(180,140,60,0.65);
+  --text:#D8C898;--text2:#807850;
+  --green:#4CAF75;--red:#E74C3C;--blue:#3498DB;--purple:#9B59B6;
+}
+
+/* ─── RESET & BASE ─── */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:'Cinzel',serif;}
+#titleScreen{
+  position:fixed;inset:0;z-index:100;
+  background:radial-gradient(ellipse 100% 80% at 50% 35%,#0D1F3C 0%,#050A12 100%);
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;
+}
+#titleScreen.active{display:flex;}
+#starsBg{position:absolute;inset:0;pointer-events:none;}
+
+.t-ornament{font-size:11px;color:rgba(180,140,60,0.5);letter-spacing:6px;margin-bottom:20px;}
+.t-moon{font-size:64px;animation:moonFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 24px rgba(200,160,60,0.7));margin-bottom:16px;}
+@keyframes moonFloat{0%,100%{transform:translateY(0)rotate(-5deg);}50%{transform:translateY(-12px)rotate(5deg);}}
+.t-arabic{font-family:'Scheherazade New',serif;font-size:52px;color:var(--gold2);
+  text-shadow:0 0 40px rgba(200,160,60,0.6),0 0 80px rgba(200,160,60,0.2);
+  animation:titleGlow 2.5s ease-in-out infinite alternate;margin-bottom:6px;}
+@keyframes titleGlow{from{text-shadow:0 0 20px rgba(200,160,60,0.4);}to{text-shadow:0 0 60px rgba(200,160,60,0.9),0 0 100px rgba(200,160,60,0.3);}}
+.t-en{font-size:18px;font-weight:700;letter-spacing:8px;color:var(--gold);margin-bottom:4px;}
+.t-tag{font-size:11px;color:var(--text2);letter-spacing:3px;margin-bottom:40px;}
+.t-divider{width:220px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 40px;}
+.t-btn{
+  background:linear-gradient(135deg,var(--gold3),var(--gold),var(--gold3));
+  background-size:200%;color:#1A0E00;border:none;
+  font-family:'Cinzel',serif;font-size:16px;font-weight:700;letter-spacing:3px;
+  padding:18px 56px;cursor:pointer;
+  clip-path:polygon(10px 0%,calc(100% - 10px) 0%,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0% calc(100% - 10px),0% 10px);
+  animation:btnShimmer 2s linear infinite,btnPulse 1.5s ease-in-out infinite alternate;
+}
+@keyframes btnShimmer{0%{background-position:0%}100%{background-position:200%}}
+@keyframes btnPulse{from{box-shadow:0 0 20px rgba(200,160,60,0.3);}to{box-shadow:0 0 50px rgba(200,160,60,0.8);}}
+.t-hint{margin-top:20px;font-size:10px;color:rgba(160,140,90,0.4);letter-spacing:2px;}
+
+.lantern{position:absolute;font-size:22px;animation:lFloat 4s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(200,160,60,0.7));}
+@keyframes lFloat{0%,100%{transform:translateY(0)rotate(-4deg);}50%{transform:translateY(-14px)rotate(4deg);}}
+
+/* ─── GAME SCREEN ─── */
+#gameScreen{
+  position:fixed;inset:0;
+  display:none;flex-direction:column;
+  background:#050A10;
+}
+
+/* TOP HUD */
+#topHud{
+  height:52px;flex-shrink:0;
+  background:var(--panel);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 12px;
+  position:relative;z-index:10;
+}
+.hud-avatar{width:36px;height:36px;background:rgba(180,140,60,0.1);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.hud-bars{flex:1;display:flex;flex-direction:column;gap:4px;}
+.bar-row{display:flex;align-items:center;gap:6px;}
+.bar-icon{font-size:9px;width:10px;text-align:center;}
+.bar-track{flex:1;height:7px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.05);overflow:hidden;}
+.bar-fill{height:100%;transition:width .4s cubic-bezier(.4,0,.2,1);}
+.fill-hp{background:linear-gradient(90deg,#7B0000,#E74C3C);}
+.fill-xp{background:linear-gradient(90deg,#4A1A7B,#9B59B6);}
+.bar-val{font-size:8px;color:var(--text2);font-family:monospace;width:28px;text-align:right;}
+.hud-level{text-align:center;flex-shrink:0;}
+.lv-num{font-size:22px;font-weight:900;color:var(--gold2);line-height:1;text-shadow:0 0 15px rgba(200,160,60,0.5);}
+.lv-lbl{font-size:7px;color:var(--text2);letter-spacing:1px;}
+.hud-coins{text-align:center;flex-shrink:0;}
+.coin-num{font-size:16px;font-weight:700;color:var(--gold);}
+.coin-lbl{font-size:7px;color:var(--text2);}
+
+/* CANVAS AREA */
+#canvasWrap{flex:1;position:relative;overflow:hidden;background:#0A1505;}
+#gc{position:absolute;image-rendering:pixelated;image-rendering:crisp-edges;}
+
+/* BOTTOM CONTROLS */
+#bottomHud{
+  height:160px;flex-shrink:0;
+  background:var(--panel);border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;position:relative;z-index:10;
+}
+
+/* D-PAD */
+#dpad{
+  width:136px;height:136px;position:relative;flex-shrink:0;
+}
+.dp-btn{
+  position:absolute;width:44px;height:44px;
+  background:rgba(180,140,60,0.08);
+  border:1px solid rgba(180,140,60,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:rgba(200,160,60,0.5);
+  cursor:pointer;transition:all .08s;
+  user-select:none;-webkit-user-select:none;
+}
+.dp-btn:active,.dp-btn.pressed{
+  background:rgba(180,140,60,0.25);
+  border-color:rgba(180,140,60,0.7);
+  color:rgba(240,210,100,0.9);
+  transform:scale(0.92);
+}
+.dp-up{left:46px;top:0;border-radius:4px 4px 0 0;}
+.dp-down{left:46px;bottom:0;border-radius:0 0 4px 4px;}
+.dp-left{left:0;top:46px;border-radius:4px 0 0 4px;}
+.dp-right{right:0;top:46px;border-radius:0 4px 4px 0;}
+.dp-center{
+  left:46px;top:46px;
+  background:rgba(180,140,60,0.05);
+  border:1px solid rgba(180,140,60,0.15);
+  border-radius:2px;
+}
+
+/* ACTION BUTTONS */
+#actionBtns{display:flex;flex-direction:column;gap:12px;align-items:center;}
+.act-btn{
+  width:62px;height:62px;border-radius:50%;border:2px solid;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .08s;
+  user-select:none;-webkit-user-select:none;
+  font-family:'Cinzel',serif;
+}
+.act-btn:active{transform:scale(0.88);}
+#btnInteract{
+  background:radial-gradient(circle,rgba(200,160,60,0.2),rgba(200,160,60,0.05));
+  border-color:var(--gold);
+  box-shadow:0 0 20px rgba(200,160,60,0.2);
+}
+#btnInteract:active{background:radial-gradient(circle,rgba(200,160,60,0.4),rgba(200,160,60,0.1));box-shadow:0 0 30px rgba(200,160,60,0.5);}
+.act-icon{font-size:20px;}
+.act-lbl{font-size:7px;color:var(--text2);letter-spacing:1px;margin-top:1px;}
+#btnInteract .act-lbl{color:var(--gold);}
+
+/* SPRINT TOGGLE */
+#sprintWrap{display:flex;flex-direction:column;align-items:center;gap:4px;}
+#btnSprint{
+  width:50px;height:50px;border-radius:50%;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.12);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .08s;user-select:none;-webkit-user-select:none;
+}
+#btnSprint.active{background:rgba(100,200,100,0.2);border-color:var(--green);box-shadow:0 0 12px rgba(76,175,117,0.4);}
+#btnSprint:active{transform:scale(0.88);}
+.sprint-icon{font-size:16px;}
+.sprint-lbl{font-size:7px;color:var(--text2);letter-spacing:1px;}
+
+/* QUEST BADGE STRIP */
+#questStrip{
+  position:absolute;bottom:160px;left:0;right:0;
+  display:flex;gap:6px;padding:6px 10px;
+  background:rgba(5,10,20,0.85);border-top:1px solid var(--border);
+  z-index:9;overflow-x:auto;
+}
+.qs-tier-label{
+  font-size:8px;color:var(--gold3);letter-spacing:1px;
+  padding:2px 6px;flex-shrink:0;align-self:center;
+  border-left:2px solid var(--gold3);margin-left:4px;
+}
+.qs-chip{
+  display:flex;align-items:center;gap:5px;padding:4px 10px;flex-shrink:0;
+  border:1px solid;font-size:9px;letter-spacing:0.5px;
+  transition:all .2s;
+}
+.qs-chip.open{border-color:rgba(180,140,60,0.5);color:var(--gold);background:rgba(180,140,60,0.08);}
+.qs-chip.done{border-color:rgba(76,175,117,0.5);color:var(--green);background:rgba(76,175,117,0.08);}
+
+/* ─── DIALOG ─── */
+#dialogOverlay{
+  position:absolute;bottom:0;left:0;right:0;z-index:50;
+  display:none;padding:10px 10px 14px;
+  background:linear-gradient(to top,rgba(5,10,25,0.99) 0%,rgba(5,10,25,0.85) 100%);
+  border-top:1px solid var(--border2);
+}
+.dlg-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.dlg-portrait{
+  width:44px;height:44px;flex-shrink:0;font-size:26px;
+  background:rgba(180,140,60,0.1);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+}
+.dlg-name{font-size:13px;color:var(--gold2);font-weight:700;}
+.dlg-title{font-size:10px;color:var(--text2);margin-top:2px;}
+.dlg-arabic{
+  font-family:'Scheherazade New',serif;font-size:20px;
+  color:var(--gold2);direction:rtl;text-align:right;
+  margin-bottom:8px;line-height:1.8;display:none;
+}
+.dlg-text{font-size:13px;line-height:1.65;color:var(--text);margin-bottom:8px;}
+.dlg-tap{font-size:9px;color:rgba(160,140,90,0.5);letter-spacing:2px;animation:blk 1s infinite;}
+@keyframes blk{0%,100%{opacity:1;}50%{opacity:0.2;}}
+
+/* ─── QUEST MODAL ─── */
+#questModal{
+  position:absolute;inset:0;z-index:80;
+  display:none;align-items:flex-end;
+  background:rgba(0,5,15,0.85);
+}
+#questModal.open{display:flex;}
+.qm-sheet{
+  width:100%;max-height:88vh;overflow-y:auto;
+  background:#0B1428;
+  border-top:2px solid var(--gold);
+  border-radius:16px 16px 0 0;
+  padding-bottom:20px;
+}
+.qm-sheet::-webkit-scrollbar{width:3px;}
+.qm-sheet::-webkit-scrollbar-thumb{background:var(--gold3);}
+.qm-handle{width:36px;height:4px;background:rgba(180,140,60,0.3);margin:10px auto 0;border-radius:2px;}
+.qm-header{padding:16px 18px 12px;border-bottom:1px solid var(--border);}
+.qm-htop{display:flex;align-items:center;gap:12px;}
+.qm-icon{font-size:28px;filter:drop-shadow(0 0 10px rgba(200,160,60,0.5));}
+.qm-htitle{font-size:16px;color:var(--gold2);}
+.qm-hsub{font-size:11px;color:var(--text2);margin-top:3px;}
+.qm-body{padding:16px 18px;}
+
+.ayat-card{
+  background:rgba(0,0,0,0.4);border:1px solid var(--border);
+  border-left:3px solid var(--gold);padding:14px 16px;margin-bottom:14px;
+}
+.ay-arabic{
+  font-family:'Scheherazade New',serif;font-size:24px;
+  color:var(--gold2);direction:rtl;text-align:right;line-height:2;margin-bottom:8px;
+}
+.ay-latin{font-size:11px;color:#C4A55A;font-style:italic;margin-bottom:6px;}
+.ay-trans{font-size:12px;color:var(--text);line-height:1.6;
+  border-top:1px solid var(--border);padding-top:8px;margin-top:8px;}
+
+.npc-hint{
+  display:flex;gap:10px;padding:10px 14px;margin-bottom:16px;
+  background:rgba(42,92,63,0.12);border:1px solid rgba(76,175,117,0.2);
+  font-size:12px;color:#90CCA0;line-height:1.5;
+}
+.nh-icon{font-size:18px;flex-shrink:0;}
+
+.q-question{font-size:14px;color:var(--gold2);margin-bottom:14px;line-height:1.5;}
+.q-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.q-opt{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  font-size:13px;color:var(--text);cursor:pointer;width:100%;text-align:left;
+  transition:all .15s;-webkit-tap-highlight-color:transparent;
+}
+.q-opt:active{transform:scale(0.98);}
+.q-opt.correct{background:rgba(42,92,63,0.3);border-color:var(--green);color:var(--green);}
+.q-opt.wrong{background:rgba(192,57,43,0.2);border-color:var(--red);color:#E07060;}
+.opt-letter{
+  width:26px;height:26px;border:1px solid currentColor;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+}
+.q-result{text-align:center;padding:0 4px;}
+.res-ok{font-size:18px;color:var(--green);margin-bottom:6px;}
+.res-ng{font-size:16px;color:#E07060;margin-bottom:6px;}
+.res-xp{font-size:20px;color:var(--purple);font-weight:700;margin:8px 0;}
+.res-exp{font-size:12px;color:#90CCA0;line-height:1.6;margin-bottom:16px;}
+.btn-claim{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  color:#1A0E00;border:none;font-family:'Cinzel',serif;
+  font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer;
+  clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0% calc(100% - 8px),0% 8px);
+  transition:all .15s;
+}
+.btn-claim:active{transform:scale(0.97);filter:brightness(0.9);}
+
+/* ─── LEVEL UP ─── */
+#lvlUpOverlay{
+  position:absolute;inset:0;z-index:90;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.75);pointer-events:none;
+}
+#lvlUpOverlay.show{display:flex;}
+.lu-box{text-align:center;animation:luIn .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes luIn{from{transform:scale(0.4);opacity:0;}to{transform:scale(1);opacity:1;}}
+.lu-star{font-size:48px;animation:luSpin 1s linear infinite;}
+@keyframes luSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.lu-title{font-size:13px;color:var(--gold);letter-spacing:5px;margin:8px 0 4px;}
+.lu-num{font-size:72px;font-weight:900;color:var(--gold2);line-height:1;
+  text-shadow:0 0 40px rgba(200,160,60,0.9);}
+.lu-rank{font-size:14px;color:var(--text);margin-top:6px;}
+
+/* ─── TOAST ─── */
+#toastWrap{
+  position:absolute;top:60px;left:0;right:0;z-index:200;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  pointer-events:none;
+}
+.toast{
+  background:rgba(5,10,25,0.95);border:1px solid var(--border2);
+  padding:8px 20px;font-size:11px;color:var(--gold2);letter-spacing:1px;
+  max-width:280px;text-align:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  animation:tIn .3s cubic-bezier(.34,1.56,.64,1),tOut .3s ease-in 2.7s forwards;
+}
+@keyframes tIn{from{transform:translateY(-20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+@keyframes tOut{from{opacity:1;}to{opacity:0;transform:translateY(-10px);}}
+
+/* ─── FLOATING XP ─── */
+.fxp{
+  position:absolute;z-index:85;pointer-events:none;
+  font-size:16px;font-weight:700;color:var(--purple);
+  text-shadow:0 0 10px rgba(155,89,182,0.8);
+  animation:fxpUp 1.5s ease-out forwards;
+}
+@keyframes fxpUp{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(-70px);opacity:0;}}
+
+/* ─── NPC INDICATOR (! bubble) ─── */
+.npc-indicator{position:absolute;pointer-events:none;z-index:20;}
+</style>
+</head>
+<body>
+
+<!-- ════ USERNAME SCREEN ════ -->
+<div id="usernameScreen">
+  <canvas id="starsBg2" style="position:absolute;inset:0;pointer-events:none;"></canvas>
+  <div class="t-moon" style="font-size:48px;margin-bottom:12px;">☽</div>
+  <div class="un-title">Masukkan Namamu</div>
+  <div class="un-sub">Namamu akan muncul di papan peringkat.<br>Pilih nama yang baik — karena nama adalah doa.</div>
+  <div class="un-input-wrap">
+    <input class="un-input" id="unInput" type="text" maxlength="16" placeholder="Nama Kamu..." autocomplete="off" spellcheck="false">
+  </div>
+  <div class="un-hint">Maks 16 karakter</div>
+  <button class="un-btn" id="unSubmit">▶ &nbsp;BISMILLAH, MULAI!</button>
+
+  <div class="un-saved-list" id="unSavedList" style="display:none;">
+    <div class="un-saved-title">— Atau lanjutkan sebagai —</div>
+    <div id="unSavedItems"></div>
+  </div>
+</div>
+
+<!-- ════ TITLE ════ -->
+<div id="titleScreen">
+  <canvas id="starsBg"></canvas>
+  <div class="lantern" style="left:7%;top:12%;animation-delay:0s">🪔</div>
+  <div class="lantern" style="right:9%;top:20%;animation-delay:1.1s">🪔</div>
+  <div class="lantern" style="left:12%;bottom:25%;animation-delay:0.6s">🪔</div>
+  <div class="lantern" style="right:7%;bottom:35%;animation-delay:1.7s">🪔</div>
+
+  <div class="t-ornament">✦ Petualangan Sirah Nabawiyyah ✦</div>
+  <div class="t-moon">☽</div>
+  <div class="t-arabic">نور الإيمان</div>
+  <div class="t-en">NUR AL-IMAN</div>
+  <div class="t-tag">The Light of Faith</div>
+  <div class="t-divider"></div>
+  <button class="t-btn" id="btnStart">▶ &nbsp;MULAI PERJALANAN</button>
+  <div class="t-hint">Tap layar untuk bergerak · Tekan ⚡ untuk interaksi</div>
+</div>
+
+<!-- ════ GAME ════ -->
+<div id="gameScreen">
+
+  <!-- TOP HUD -->
+  <div id="topHud">
+    <div class="hud-avatar">🧕</div>
+    <div class="hud-bars">
+      <div class="bar-row">
+        <div class="bar-icon">❤</div>
+        <div class="bar-track"><div class="bar-fill fill-hp" id="barHp" style="width:100%"></div></div>
+        <div class="bar-val" id="valHp">100</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-icon">⬆</div>
+        <div class="bar-track"><div class="bar-fill fill-xp" id="barXp" style="width:0%"></div></div>
+        <div class="bar-val" id="valXp">0</div>
+      </div>
+    </div>
+    <div class="hud-level">
+      <div class="lv-num" id="lvNum">1</div>
+      <div class="lv-lbl">LEVEL</div>
+    </div>
+    <div class="hud-coins">
+      <div class="coin-num" id="coinNum">🪙0</div>
+      <div class="coin-lbl">DINAR</div>
+    </div>
+    <button id="btnLb" title="Papan Peringkat">
+      🏆
+      <div class="lb-btn-lbl">RANK</div>
+    </button>
+  </div>
+
+  <!-- CANVAS -->
+  <div id="canvasWrap">
+    <canvas id="gc"></canvas>
+
+    <!-- DIALOG -->
+    <div id="dialogOverlay">
+      <div class="dlg-header">
+        <div class="dlg-portrait" id="dlgPortrait">💬</div>
+        <div>
+          <div class="dlg-name" id="dlgName"></div>
+          <div class="dlg-title" id="dlgTitleEl"></div>
+        </div>
+      </div>
+      <div class="dlg-arabic" id="dlgArabic"></div>
+      <div class="dlg-text" id="dlgText"></div>
+      <div class="dlg-tap">▼ TAP UNTUK LANJUT</div>
+    </div>
+
+    <!-- QUEST MODAL -->
+    <div id="questModal">
+      <div class="qm-sheet">
+        <div class="qm-handle"></div>
+        <div class="qm-header">
+          <div class="qm-htop">
+            <div class="qm-icon" id="qmIcon">📖</div>
+            <div>
+              <div class="qm-htitle" id="qmTitle">Hafalan Quest</div>
+              <div class="qm-hsub" id="qmSub">Pelajari ayat berikut</div>
+            </div>
+          </div>
+        </div>
+        <div class="qm-body" id="qmBody"></div>
+      </div>
+    </div>
+
+    <!-- LEVEL UP -->
+    <div id="lvlUpOverlay">
+      <div class="lu-box">
+        <div class="lu-star">⭐</div>
+        <div class="lu-title">LEVEL UP!</div>
+        <div class="lu-num" id="luNum">2</div>
+        <div class="lu-rank" id="luRank">Santri</div>
+      </div>
+    </div>
+
+    <div id="toastWrap"></div>
+
+    <!-- LEADERBOARD -->
+    <div id="lbOverlay">
+      <div class="lb-sheet">
+        <div class="lb-handle"></div>
+        <div class="lb-header">
+          <div class="lb-title-wrap">
+            <div class="lb-trophy">🏆</div>
+            <div>
+              <div class="lb-title">Papan Peringkat</div>
+              <div class="lb-sub">Nur Al-Iman · Top Huffazh</div>
+            </div>
+          </div>
+          <div class="lb-close" id="lbClose">✕</div>
+        </div>
+        <div id="lbPodium" class="lb-podium"></div>
+        <div class="lb-body" id="lbBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUEST STRIP -->
+  <div id="questStrip"></div>
+
+  <!-- BOTTOM CONTROLS -->
+  <div id="bottomHud">
+    <!-- D-PAD -->
+    <div id="dpad">
+      <div class="dp-btn dp-up"    id="dpUp">▲</div>
+      <div class="dp-btn dp-down"  id="dpDown">▼</div>
+      <div class="dp-btn dp-left"  id="dpLeft">◀</div>
+      <div class="dp-btn dp-right" id="dpRight">▶</div>
+      <div class="dp-btn dp-center"></div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div id="actionBtns">
+      <button class="act-btn" id="btnInteract">
+        <div class="act-icon">⚡</div>
+        <div class="act-lbl">AKSI</div>
+      </button>
+    </div>
+
+    <!-- SPRINT -->
+    <div id="sprintWrap">
+      <div class="act-btn" id="btnSprint">
+        <div class="sprint-icon">💨</div>
+        <div class="sprint-lbl">LARI</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONFIG & CONSTANTS
+// ═══════════════════════════════════════════════════════
+const T    = 16;   // tile size px (small for more tiles on screen)
+const COLS = 32;
+const ROWS = 24;
+const VIEWPORT_TILES_X = 12; // how many tiles visible horizontally
+const VIEWPORT_TILES_Y = 10;
+
+// Canvas
+const canvasEl = document.getElementById('gc');
+const ctx = canvasEl.getContext('2d');
+
+// We render at 2x internal resolution for crisp pixels
+const RES = 2;
+const VIEW_W = VIEWPORT_TILES_X * T;
+const VIEW_H = VIEWPORT_TILES_Y * T;
+canvasEl.width  = VIEW_W;
+canvasEl.height = VIEW_H;
+
+function resizeCanvas() {
+  const wrap = document.getElementById('canvasWrap');
+  const aw = wrap.clientWidth, ah = wrap.clientHeight;
+  const sx = aw / VIEW_W, sy = ah / VIEW_H;
+  const s = Math.min(sx, sy);
+  canvasEl.style.width  = (VIEW_W * s) + 'px';
+  canvasEl.style.height = (VIEW_H * s) + 'px';
+  canvasEl.style.left   = ((aw - VIEW_W * s) / 2) + 'px';
+  canvasEl.style.top    = ((ah - VIEW_H * s) / 2) + 'px';
+}
+window.addEventListener('resize', resizeCanvas);
+
+// ═══════════════════════════════════════════════════════
+// MAP  (0=void 1=deep_grass 2=grass 3=path 4=wall 5=tree
+//        6=water 7=flower 8=sand 9=mosque 10=rock)
+// ═══════════════════════════════════════════════════════
+const MAP = [
+  [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+  [4,2,2,2,2,2,7,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,7,2,2,2,2,2,4],
+  [4,2,7,2,2,2,2,2,2,3,3,3,3,3,3,9,9,9,9,3,3,3,2,2,2,2,2,7,2,2,2,4],
+  [4,2,2,5,2,2,2,2,2,3,9,9,9,9,9,9,9,9,9,9,9,3,2,2,5,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,5,2,2,3,9,9,9,9,9,9,9,9,9,9,9,3,2,2,2,2,5,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,3,9,9,9,9,9,9,9,9,9,9,9,3,2,2,2,2,2,2,2,7,2,4],
+  [4,7,2,2,2,2,2,2,2,3,9,9,9,9,9,9,9,9,9,9,9,3,2,2,2,2,2,2,2,2,7,4],
+  [4,2,2,5,2,2,2,2,2,3,3,3,3,9,9,9,9,3,3,3,3,3,2,2,5,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,3,9,9,9,9,3,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,7,2,2,2,2,2,2,3,9,9,9,9,3,2,2,2,2,2,2,2,7,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,6,6,2,2,2,2,2,2,2,2,5,2,2,4],
+  [4,2,5,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,6,6,2,2,2,2,2,2,5,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,7,2,2,2,2,2,2,2,2,3,2,2,2,2,3,2,2,2,2,7,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,5,2,2,2,2,2,2,3,2,2,2,2,3,2,2,2,2,2,2,5,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,3,2,2,2,2,2,2,2,2,2,2,2,7,2,4],
+  [4,7,2,2,2,2,2,2,2,5,2,2,3,3,3,3,3,3,2,2,5,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,5,2,2,2,4],
+  [4,2,2,5,2,2,7,2,2,2,2,2,2,2,2,2,2,2,2,2,7,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,5,4],
+  [4,2,7,2,2,2,2,2,2,2,5,2,2,2,2,2,2,2,2,5,2,2,2,2,2,7,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,7,2,2,2,2,2,2,2,7,2,2,2,2,2,2,2,2,2,2,2,2,2,2,7,2,2,4],
+  [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+];
+
+const SOLID = new Set([4,5,6,10]);
+
+function tileAt(c,r){
+  if(c<0||r<0||c>=COLS||r>=ROWS)return 4;
+  return MAP[r]?.[c]??4;
+}
+function isSolid(c,r){
+  return SOLID.has(tileAt(c,r));
+}
+
+// ═══════════════════════════════════════════════════════
+// PALETTE (pixel colors)
+// ═══════════════════════════════════════════════════════
+const PAL = {
+  // Sky/deep
+  darkGrass:'#1C3A10', grass:'#2D5C1A', grassAlt:'#336920', grassLight:'#3D7A22',
+  flower1:'#FF6B8A', flower2:'#FFD700', flower3:'#FF8C00', flower4:'#DA70D6',
+  flowerCenter:'#FFF8DC',
+  path:'#B89055', pathAlt:'#C9A865', pathDark:'#8A6830',
+  wall:'#3A2510', wallAlt:'#4A3220', wallDark:'#2A1A08', wallLight:'#5A4030',
+  tree1:'#152C0D', tree2:'#1E5C10', tree3:'#2A7A18', tree4:'#38A024', treeLight:'rgba(255,255,255,0.18)',
+  trunk:'#5C3317', trunkLight:'#7A4522',
+  water1:'#1A4060', water2:'#1F5575', waterShine:'rgba(160,210,255,0.35)',
+  sand:'#C4A55A', sandAlt:'#D4B56A',
+  mosque:'#BEA078', mosqueAlt:'#C9A88A', mosqueMarble:'rgba(255,255,255,0.1)',
+  mosqueGrout:'rgba(0,0,0,0.12)',
+  rock:'#4A4A4A', rockAlt:'#666', rockLight:'#888',
+  // Character colors
+  skin:'#C8905A', skinDark:'#A87040', skinLight:'#E0A870',
+  eye:'#1A0802',
+  white:'#F2EFE7', whiteDark:'#D8D5CC', whiteShadow:'#B8B5AA',
+  sand2:'#C4A06E', // headwrap
+  sandStrap:'#D4B07E',
+  gold:'#C9A84C', goldLight:'#F0D080', goldDark:'#7A5510',
+  shadow:'rgba(0,0,0,0.4)',
+  shadowLight:'rgba(0,0,0,0.25)',
+};
+
+// ═══════════════════════════════════════════════════════
+// DRAWING PRIMITIVES
+// ═══════════════════════════════════════════════════════
+function px(x,y,c){ctx.fillStyle=c;ctx.fillRect(x,y,1,1);}
+function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h);}
+function hline(x,y,w,c){rect(x,y,w,1,c);}
+function vline(x,y,h,c){rect(x,y,1,h,c);}
+
+// ═══════════════════════════════════════════════════════
+// TILE RENDERER — pixel art style, 16×16 each
+// ═══════════════════════════════════════════════════════
+// Pre-render tiles to offscreen canvases for perf
+const tileCache = {};
+
+function makeTile(tid, col, row) {
+  const key = `${tid}_${(col^row)&3}`;
+  if (tileCache[key]) return tileCache[key];
+
+  const oc = document.createElement('canvas');
+  oc.width = oc.height = T;
+  const c = oc.getContext('2d');
+  const v = (col ^ row) & 1; // checkerboard
+
+  const r = (x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(x,y,w,h);};
+  const p = (x,y,col)=>{c.fillStyle=col;c.fillRect(x,y,1,1);};
+  const hl = (x,y,w,col)=>{c.fillStyle=col;c.fillRect(x,y,w,1);};
+  const vl = (x,y,h,col)=>{c.fillStyle=col;c.fillRect(x,y,1,h);};
+
+  if (tid===1||tid===2) { // deep_grass
+    r(0,0,T,T,PAL.darkGrass);
+    r(0,T-2,T,2,'rgba(0,0,0,0.15)');
+  }
+
+  else if (tid===7) { // grass with flower
+    r(0,0,T,T,v?PAL.grass:PAL.grassAlt);
+    r(0,T-2,T,2,'rgba(0,0,0,0.1)');
+    // grass blades
+    const g=(col*7+row*13)%16;
+    r(g%6+1,T-7,1,5,PAL.grassLight);
+    r((g+4)%6+5,T-6,1,4,PAL.grassLight);
+    r((g+9)%6+9,T-8,1,6,PAL.grassLight);
+    // flower
+    const fx=(col*3+row*7)%8+2, fy=(col*5+row*3)%6+3;
+    const fc=[PAL.flower1,PAL.flower2,PAL.flower3,PAL.flower4][(col+row)%4];
+    r(fx,fy,3,3,fc);
+    p(fx+1,fy-1,fc); p(fx+1,fy+3,fc); p(fx-1,fy+1,fc); p(fx+3,fy+1,fc);
+    r(fx+1,fy+1,1,1,PAL.flowerCenter);
+  }
+
+  else if (tid===3) { // path / cobblestone
+    r(0,0,T,T,v?PAL.path:PAL.pathAlt);
+    // cobble stones
+    r(1,1,6,5,PAL.pathDark+'22');
+    r(8,1,6,5,PAL.pathDark+'22');
+    r(1,8,6,5,PAL.pathDark+'22');
+    r(8,8,6,5,PAL.pathDark+'22');
+    // grout lines
+    hl(0,6,T,'rgba(0,0,0,0.18)');
+    vl(7,0,T,'rgba(0,0,0,0.18)');
+    // highlight
+    r(1,1,6,1,'rgba(255,255,255,0.12)');
+    r(8,1,6,1,'rgba(255,255,255,0.12)');
+    // shade
+    r(0,T-2,T,2,PAL.pathDark+'55');
+  }
+
+  else if (tid===4) { // wall / stone
+    const row2 = row % 2;
+    r(0,0,T,T,v?PAL.wall:PAL.wallAlt);
+    // brick mortar lines
+    hl(0,T/2,T,PAL.wallDark);
+    if(row2===0){vl(T/2,0,T/2,PAL.wallDark);vl(0,T/2,T/2,PAL.wallDark);}
+    else{vl(0,0,T/2,PAL.wallDark);vl(T/2,T/2,T/2,PAL.wallDark);}
+    // top edge highlight
+    hl(0,0,T,'rgba(255,255,255,0.07)');
+    // corner shadow
+    r(T-3,T-3,3,3,PAL.wallDark);
+    // mossy touch
+    if((col*5+row*7)%11<2) r(2,T-4,3,3,'#2A4A10');
+  }
+
+  else if (tid===5) { // tree
+    r(0,0,T,T,PAL.tree1);
+    // trunk
+    r(6,10,4,6,PAL.trunk);
+    r(7,10,2,6,PAL.trunkLight);
+    // canopy outer
+    c.fillStyle=PAL.tree2;
+    c.beginPath();c.arc(8,7,7,0,Math.PI*2);c.fill();
+    // canopy mid
+    c.fillStyle=PAL.tree3;
+    c.beginPath();c.arc(8,5,5,0,Math.PI*2);c.fill();
+    // canopy top
+    c.fillStyle=PAL.tree4;
+    c.beginPath();c.arc(7,4,3,0,Math.PI*2);c.fill();
+    // highlight
+    c.fillStyle=PAL.treeLight;
+    c.beginPath();c.arc(6,3,1.5,0,Math.PI*2);c.fill();
+    // root shadow
+    r(4,13,8,2,'rgba(0,0,0,0.3)');
+  }
+
+  else if (tid===6) { // water — no animation in cache, do live
+    r(0,0,T,T,PAL.water1);
+  }
+
+  else if (tid===8) { // sand / courtyard
+    r(0,0,T,T,v?PAL.sand:PAL.sandAlt);
+    r(0,T-2,T,2,'rgba(0,0,0,0.08)');
+  }
+
+  else if (tid===9) { // mosque floor
+    r(0,0,T,T,v?PAL.mosque:PAL.mosqueAlt);
+    if(v){r(1,1,T-2,T-2,PAL.mosqueMarble);}
+    // grout
+    hl(0,0,T,PAL.mosqueGrout);
+    vl(0,0,T,PAL.mosqueGrout);
+    hl(0,T-1,T,'rgba(255,255,255,0.06)');
+  }
+
+  else if (tid===10) { // rock
+    r(0,0,T,T,PAL.darkGrass);
+    c.fillStyle=PAL.rock;
+    c.beginPath();c.ellipse(8,10,6,5,0,0,Math.PI*2);c.fill();
+    c.fillStyle=PAL.rockAlt;
+    c.beginPath();c.ellipse(7,9,4,3,0,0,Math.PI*2);c.fill();
+    c.fillStyle=PAL.rockLight;
+    c.beginPath();c.ellipse(6,8,2,1.5,-.3,0,Math.PI*2);c.fill();
+    r(3,13,10,2,'rgba(0,0,0,0.25)');
+  }
+
+  tileCache[key] = oc;
+  return oc;
+}
+
+function drawTile(screenX, screenY, tid, col, row) {
+  if (tid === 6) {
+    // Water — animated live
+    const wave = Math.sin(gameState.frame * 0.06 + col * 1.2 + row * 0.8);
+    const a1 = 0.85 + wave * 0.15;
+    ctx.fillStyle = `rgba(26,64,96,${a1})`;
+    ctx.fillRect(screenX, screenY, T, T);
+    ctx.fillStyle = PAL.water2;
+    ctx.fillRect(screenX, screenY + T*0.5, T, T*0.5);
+    // shine
+    if ((gameState.frame + col*3 + row*5) % 18 < 4) {
+      ctx.fillStyle = PAL.waterShine;
+      ctx.fillRect(screenX+2, screenY+5+Math.round(wave*2), 6, 2);
+    }
+    return;
+  }
+  const tile = makeTile(tid, col, row);
+  ctx.drawImage(tile, screenX, screenY);
+}
+
+// ═══════════════════════════════════════════════════════
+// CHARACTER PIXEL ART — 14×20 pixel sprites
+// ═══════════════════════════════════════════════════════
+
+// Draw a pixel-art character at (x,y) with config
+function drawCharacter(x, y, cfg) {
+  const {
+    robeColor='#F2EFE7', robeShade='#D8D5CC',
+    headwrap='#E8E8E0', headwrapAccent='#3D7A22', headwrapTail=true,
+    hasBeard=false, beardColor='#2A1505',
+    eyeColor='#1A0802', skinColor='#C8905A',
+    walkFrame=0, facingUp=false,
+    scrollInHand=false, swordInHand=false, staffInHand=false,
+    haloColor=null, nametagColor=null,
+  } = cfg;
+
+  const bob = Math.sin(walkFrame) * 1.5;
+  const legL = Math.sin(walkFrame) * 2;
+  const legR = -legL;
+  const by = Math.round(bob);
+
+  // Shadow
+  ctx.fillStyle = PAL.shadow;
+  ctx.beginPath();
+  ctx.ellipse(x+7, y+19, 6, 2, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // Halo (for special NPCs)
+  if (haloColor) {
+    ctx.fillStyle = haloColor;
+    ctx.globalAlpha = 0.25 + Math.sin(gameState.frame * 0.08) * 0.1;
+    ctx.beginPath();
+    ctx.arc(x+7, y+4+by, 7, 0, Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+
+  // FEET / sandals
+  rect(x+3+Math.round(legL), y+16+by, 3, 2, '#8B6914');
+  rect(x+8+Math.round(legR), y+16+by, 3, 2, '#8B6914');
+  rect(x+3+Math.round(legL), y+15+by, 3, 1, '#A07820');
+  rect(x+8+Math.round(legR), y+15+by, 3, 1, '#A07820');
+
+  // ROBE body
+  rect(x+3, y+9+by, 8, 8, robeColor);
+  rect(x+2, y+11+by, 10, 5, robeColor);
+  rect(x+3, y+15+by, 8, 2, robeShade);
+  // Robe fold lines
+  vline(x+7, y+9+by, 8, robeShade+'80');
+  // Robe hem
+  hline(x+2, y+16+by, 10, robeShade);
+
+  // ARMS
+  rect(x+1,  y+10+by, 3, 5, skinColor);
+  rect(x+10, y+10+by, 3, 5, skinColor);
+  // Sleeve end
+  hline(x+1, y+14+by, 3, skinColor+'AA');
+  hline(x+10, y+14+by, 3, skinColor+'AA');
+
+  // ITEM IN HAND
+  if (scrollInHand) {
+    rect(x+11, y+10+by, 3, 6, '#DEB887');
+    rect(x+11, y+10+by, 3, 1, '#C8A060');
+    rect(x+11, y+15+by, 3, 1, '#C8A060');
+    hline(x+12, y+12+by, 1, '#8B6045');
+    hline(x+12, y+13+by, 1, '#8B6045');
+  }
+  if (swordInHand) {
+    rect(x+11, y+8+by, 2, 8, '#A0A0B0');
+    rect(x+11, y+8+by, 2, 1, '#D0D0E0');
+    rect(x+10, y+13+by, 4, 2, '#C9A84C');
+    rect(x+11, y+15+by, 2, 3, '#8B6914');
+  }
+  if (staffInHand) {
+    rect(x+11, y+4+by, 1, 14, '#8B6914');
+    rect(x+11, y+4+by, 1, 1, '#C9A84C');
+    ctx.fillStyle='#C9A84C';
+    ctx.beginPath();ctx.arc(x+11,y+4+by,2,0,Math.PI*2);ctx.fill();
+  }
+
+  // NECK
+  rect(x+6, y+7+by, 3, 3, skinColor);
+
+  // HEAD
+  rect(x+4, y+2+by, 8, 7, skinColor);
+  // Face shading
+  rect(x+5, y+3+by, 6, 1, PAL.skinLight);
+  // Side shade
+  rect(x+4, y+3+by, 1, 6, PAL.skinDark);
+  rect(x+11, y+3+by, 1, 6, PAL.skinDark);
+
+  // EYES
+  if (!facingUp) {
+    rect(x+5, y+5+by, 2, 2, eyeColor);
+    rect(x+9, y+5+by, 2, 2, eyeColor);
+    // eyebrow
+    hline(x+5, y+4+by, 2, PAL.skinDark);
+    hline(x+9, y+4+by, 2, PAL.skinDark);
+    // eye shine
+    px(x+6, y+5+by, 'rgba(255,255,255,0.4)');
+    px(x+10, y+5+by, 'rgba(255,255,255,0.4)');
+  } else {
+    hline(x+5, y+6+by, 2, eyeColor);
+    hline(x+9, y+6+by, 2, eyeColor);
+  }
+
+  if (hasBeard) {
+    rect(x+5, y+7+by, 6, 2, beardColor);
+    rect(x+4, y+7+by, 2, 1, beardColor);
+    rect(x+10, y+7+by, 2, 1, beardColor);
+  }
+
+  // HEADWRAP / Kufiya
+  rect(x+4, y+1+by, 8, 4, headwrap);
+  rect(x+5, y+0+by, 6, 2, headwrap);
+  // Iqal band
+  hline(x+4, y+3+by, 8, '#222');
+  // Accent stripe
+  hline(x+4, y+1+by, 8, headwrapAccent);
+  // Drape / tail
+  if (headwrapTail) {
+    rect(x+11, y+2+by, 3, 7, headwrap);
+    rect(x+12, y+8+by, 2, 2, headwrap+'AA');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// QURAN DATA  (12 quests, 4 per tier)
+// ═══════════════════════════════════════════════════════
+const QURAN = [
+  // ── TIER 1 (Level 1–4) ──────────────────────────────
+  {
+    id:'fatiha1', surah:'Al-Fatihah', ayat:'1', tier:1,
+    arabic:'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
+    latin:'Bismillāhir-raḥmānir-raḥīm',
+    trans:'Dengan menyebut nama Allah Yang Maha Pengasih, Maha Penyayang',
+    question:'Apa makna "Ar-Rahmān" dalam Basmalah?',
+    opts:['Maha Perkasa','Maha Pengasih di dunia & akhirat','Maha Mengetahui','Maha Kaya'],
+    correct:1,
+    explanation:'Ar-Rahmān = Maha Pengasih, kasih sayang Allah meliputi seluruh makhluk di dunia dan akhirat.',
+    xp:30, coins:10,
+    hint:'Setiap amalan mulia dimulai Basmalah. Nabi ﷺ: "Tiap perkara penting tanpa Bismillah, berkahnya kurang."',
+  },
+  {
+    id:'fatiha2', surah:'Al-Fatihah', ayat:'2', tier:1,
+    arabic:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',
+    latin:'Al-ḥamdu lillāhi Rabbil-ʿālamīn',
+    trans:'Segala puji bagi Allah, Tuhan seluruh alam',
+    question:'"Rabb al-Ālamīn" artinya?',
+    opts:['Raja para malaikat','Tuhan yang memelihara seluruh alam','Penguasa Mekah','Pemimpin para Nabi'],
+    correct:1,
+    explanation:'Rabb al-Ālamīn = Tuhan yang memelihara, mendidik, dan mengurus seluruh alam semesta.',
+    xp:30, coins:10,
+    hint:'Al-Hamdulillah memenuhi timbangan amal. Ucapkan setiap saat bersyukur kepada Allah.',
+  },
+  {
+    id:'ikhlas', surah:'Al-Ikhlāṣ', ayat:'1-4', tier:1,
+    arabic:'قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌ',
+    latin:'Qul huwallāhu aḥad · Allāhuṣ-ṣamad · Lam yalid wa lam yūlad · Wa lam yakul lahū kufuwan aḥad',
+    trans:'Katakanlah: Dialah Allah Yang Maha Esa. Allah tempat meminta. Tidak beranak dan tidak diperanakkan. Tiada yang setara dengan-Nya.',
+    question:'Al-Ikhlāṣ setara dengan berapa bagian Al-Quran?',
+    opts:['Seperempat','Sepertiga','Setengah','Dua pertiga'],
+    correct:1,
+    explanation:'Hadits shahih: Surah Al-Ikhlāṣ setara sepertiga Al-Quran karena isinya tentang tauhid — inti ajaran Islam.',
+    xp:50, coins:20,
+    hint:'Aku Bilal. Saat disiksa, aku ucap "Ahad Ahad..." — keesaan Allah adalah kekuatanku.',
+  },
+  {
+    id:'kursi', surah:'Āyat Al-Kursī', ayat:'2:255', tier:1,
+    arabic:'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌ وَلَا نَوْمٌ',
+    latin:'Allāhu lā ilāha illā huwal-Ḥayyul-Qayyūm · lā taʾkhudhuhū sinatun wa lā nawm',
+    trans:'Allah, tidak ada tuhan selain Dia. Mahahidup, terus mengurus makhluk-Nya, tidak mengantuk dan tidak tidur.',
+    question:'"Al-Ḥayyu al-Qayyūm" artinya?',
+    opts:['Maha Bijaksana dan Adil','Mahahidup, Maha mengurus tanpa henti','Maha Mendengar dan Melihat','Maha Kuat dan Perkasa'],
+    correct:1,
+    explanation:'Al-Ḥayyu = Mahahidup sempurna abadi. Al-Qayyūm = Maha mengurus seluruh ciptaan tanpa pernah tidur.',
+    xp:60, coins:25,
+    hint:'Ayat Kursi adalah ayat teragung Al-Quran. Siapa membacanya setelah shalat, tidak ada penghalang masuk surga kecuali kematian.',
+  },
+
+  // ── TIER 2 (Level 5–8) ──────────────────────────────
+  {
+    id:'falaq', surah:'Al-Falaq', ayat:'1-5', tier:2,
+    arabic:'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ',
+    latin:'Qul aʿūdhu bi-Rabbil-falaq · min sharri mā khalaq · wa min sharri ghāsiqin idhā waqab',
+    trans:'Katakanlah: Aku berlindung kepada Tuhan yang menguasai subuh. Dari kejahatan makhluk-Nya. Dan dari kejahatan malam apabila telah gelap.',
+    question:'Al-Falaq artinya?',
+    opts:['Matahari terbenam','Subuh / fajar yang membelah','Bintang bersinar','Angin malam'],
+    correct:1,
+    explanation:'Al-Falaq = subuh atau fajar, cahaya yang membelah kegelapan malam. Surah ini mengajarkan kita meminta perlindungan Allah dari segala kejahatan.',
+    xp:70, coins:28,
+    hint:'Aku Umar. Rasulullah ﷺ mengajariku: Baca Al-Falaq dan An-Nās setiap pagi dan sore sebagai perlindungan.',
+  },
+  {
+    id:'nas', surah:'An-Nās', ayat:'1-6', tier:2,
+    arabic:'قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ',
+    latin:'Qul aʿūdhu bi-Rabbin-nās · Malikin-nās · Ilāhin-nās · min sharril-waswāsil-khannās',
+    trans:'Katakanlah: Aku berlindung kepada Tuhannya manusia. Raja manusia. Sembahan manusia. Dari kejahatan bisikan setan yang bersembunyi.',
+    question:'"Al-Waswāsil-Khannās" adalah?',
+    opts:['Malaikat penjaga','Setan yang membisikkan kejahatan lalu bersembunyi','Manusia jahat','Jin yang baik'],
+    correct:1,
+    explanation:'Al-Waswās = pembisik kejahatan. Al-Khannās = yang bersembunyi (setan lari ketika manusia berdzikir kepada Allah).',
+    xp:70, coins:28,
+    hint:'Nabi ﷺ setiap pagi membaca Al-Mu\'awwidzatain (Al-Falaq & An-Nās) tiga kali, meniupnya ke telapak tangan lalu mengusap tubuh.',
+  },
+  {
+    id:'fatiha3', surah:'Al-Fatihah', ayat:'3-4', tier:2,
+    arabic:'الرَّحْمَٰنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ',
+    latin:'Ar-Rahmānir-Rahīm · Māliki yawmid-dīn',
+    trans:'Yang Maha Pengasih, Maha Penyayang. Pemilik hari pembalasan.',
+    question:'"Māliki yawmid-dīn" artinya?',
+    opts:['Penguasa hari ini','Pemilik hari pembalasan / kiamat','Raja dunia','Hakim seluruh manusia'],
+    correct:1,
+    explanation:'Yawmid-Dīn = Hari Kiamat / hari pembalasan. Allah satu-satunya pemilik dan hakim di hari itu. Tidak ada kekuasaan lain selain-Nya.',
+    xp:75, coins:30,
+    hint:'Aku Aisyah. Nabi ﷺ sering mengulang ayat ini dalam shalat malam, merenungi bahwa kelak kita semua akan kembali kepada-Nya.',
+  },
+  {
+    id:'fatiha56', surah:'Al-Fatihah', ayat:'5-7', tier:2,
+    arabic:'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ۝ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ',
+    latin:'Iyyāka naʿbudu wa iyyāka nastaʿīn · Ihdinaṣ-ṣirāṭal-mustaqīm',
+    trans:'Hanya kepada Engkau kami menyembah dan hanya kepada Engkau kami memohon pertolongan. Tunjukilah kami jalan yang lurus.',
+    question:'Apa isi doa "Ihdinaṣ-ṣirāṭal-mustaqīm"?',
+    opts:['Meminta kekayaan','Meminta jalan yang lurus / petunjuk Allah','Meminta perlindungan dari musuh','Meminta umur panjang'],
+    correct:1,
+    explanation:'Ini adalah doa terpenting dalam Al-Fatihah — kita memohon hidayah (petunjuk) jalan yang lurus kepada Allah. Doa ini kita ulangi minimal 17 kali sehari dalam shalat.',
+    xp:75, coins:30,
+    hint:'Aku Aisyah. Rasulullah ﷺ bersabda: "Al-Fatihah adalah umm al-Quran (ibu Al-Quran) — setiap shalat tidak sah tanpanya."',
+  },
+
+  // ── TIER 3 (Level 9–12) ─────────────────────────────
+  {
+    id:'baqarah1', surah:'Al-Baqarah', ayat:'1-2', tier:3,
+    arabic:'الم ۝ ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ',
+    latin:'Alif-Lām-Mīm · Dhālikal-kitābu lā rayba fīh · hudan lil-muttaqīn',
+    trans:'Alif Lam Mim. Kitab (Al-Quran) ini tidak ada keraguan padanya; petunjuk bagi mereka yang bertakwa.',
+    question:'Al-Quran disebut "hudan lil-muttaqīn" artinya?',
+    opts:['Bacaan bagi orang kaya','Petunjuk bagi orang-orang yang bertakwa','Kitab hukum dunia','Tulisan para ulama'],
+    correct:1,
+    explanation:'Al-Quran adalah petunjuk (huda) bagi al-muttaqīn = orang-orang bertakwa, yang menjaga diri dari hal yang dilarang Allah dan melaksanakan perintah-Nya.',
+    xp:90, coins:40,
+    hint:'Aku Zaid bin Tsabit. Akulah yang ditugaskan mengumpulkan Al-Quran menjadi mushaf. Setiap ayat dicatat dengan teliti — tidak ada satu huruf pun yang terlewat.',
+  },
+  {
+    id:'ali_imran', surah:'Ali Imrān', ayat:'190-191', tier:3,
+    arabic:'إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ وَاخْتِلَافِ اللَّيْلِ وَالنَّهَارِ لَآيَاتٍ لِّأُولِي الْأَلْبَابِ',
+    latin:'Inna fī khalqis-samāwāti wal-arḍi wakhtilāfil-layli wan-nahāri la-āyātin li-ulil-albāb',
+    trans:'Sesungguhnya dalam penciptaan langit dan bumi, serta pergantian malam dan siang, terdapat tanda-tanda bagi orang yang berakal.',
+    question:'"Ulul Albāb" dalam ayat ini berarti?',
+    opts:['Orang yang kaya','Orang yang berakal dan merenung','Pemimpin umat','Orang yang kuat fisik'],
+    correct:1,
+    explanation:'Ulul Albāb = orang-orang yang memiliki akal budi, yang menggunakan pikirannya untuk merenungkan tanda-tanda kebesaran Allah di alam semesta.',
+    xp:90, coins:40,
+    hint:'Aku Muadz bin Jabal. Nabi ﷺ pernah menangis membaca ayat ini dan berkata: "Celakalah orang yang membacanya tapi tidak merenunginya."',
+  },
+  {
+    id:'luqman', surah:'Luqmān', ayat:'13', tier:3,
+    arabic:'وَإِذْ قَالَ لُقْمَانُ لِابْنِهِ وَهُوَ يَعِظُهُ يَا بُنَيَّ لَا تُشْرِكْ بِاللَّهِ ۖ إِنَّ الشِّرْكَ لَظُلْمٌ عَظِيمٌ',
+    latin:'Wa idh qāla Luqmānu li-bnihi wa huwa yaʿiẓuhū yā bunayya lā tusyrik billāh · innaṣ-syirka la-ẓulmun ʿaẓīm',
+    trans:'Dan ingatlah ketika Luqman berkata kepada anaknya sambil memberi nasihat: "Wahai anakku! Janganlah kamu menyekutukan Allah. Sungguh, menyekutukan Allah adalah kezaliman yang besar."',
+    question:'Nasihat pertama Luqman kepada anaknya adalah?',
+    opts:['Rajin belajar','Jangan syirik / menyekutukan Allah','Hormati orang tua','Banyak bersedekah'],
+    correct:1,
+    explanation:'Wasiat pertama Luqman adalah tauhid — jangan syirik. Syirik adalah dosa terbesar karena menyamakan makhluk dengan Al-Khaliq (Pencipta).',
+    xp:100, coins:45,
+    hint:'Aku Salman Al-Farisi. Aku menempuh perjalanan jauh dari Persia mencari kebenaran. Nasihat Luqman inilah inti dari semua pencarian — jaga tauhidmu.',
+  },
+  {
+    id:'isra', surah:'Al-Isrā\'', ayat:'23', tier:3,
+    arabic:'وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا',
+    latin:'Wa qaḍā Rabbuka allā taʿbudū illā iyyāhu wa bil-wālidayni iḥsānā',
+    trans:'Dan Tuhanmu telah memerintahkan agar kamu jangan menyembah selain Dia dan hendaklah berbuat baik kepada ibu bapak.',
+    question:'Dua perintah utama dalam ayat ini adalah?',
+    opts:['Shalat dan puasa','Tauhid (hanya menyembah Allah) dan berbakti kepada orang tua','Zakat dan haji','Jihad dan ilmu'],
+    correct:1,
+    explanation:'Allah menggandengkan tauhid (ibadah hanya kepada-Nya) dengan birrul walidain (berbakti kepada orang tua) — menunjukkan betapa tingginya kedudukan orang tua dalam Islam.',
+    xp:100, coins:45,
+    hint:'Aku Abdullah bin Masud. Aku bertanya kepada Nabi ﷺ: "Amalan apa yang paling dicintai Allah?" Beliau menjawab: "Shalat tepat waktu, kemudian berbakti kepada orang tua."',
+  },
+];
+
+// ═══════════════════════════════════════════════════════
+// NPC DATA  (12 NPCs, 4 per tier)
+// ═══════════════════════════════════════════════════════
+const NPCS = [
+  // ── TIER 1 ──────────────────────────────────────────
+  {
+    id:'khadijah', tier:1,
+    name:'Sayyidah Khadijah RA',
+    title:'Ummul Mukminin · Istri Rasulullah ﷺ',
+    portrait:'👸',
+    tileX:15, tileY:4,
+    questId:'fatiha1',
+    drawCfg:{robeColor:'#C8705A',robeShade:'#A85040',headwrap:'#F0D8B8',headwrapAccent:'#C9A84C',hasBeard:false,haloColor:'rgba(200,160,60,0.3)'},
+    dialogs:[
+      {text:'Assalamu\'alaikum, musafir iman! Aku Khadijah. Aku wanita pertama yang beriman kepada Muhammad ﷺ suamiku.',arabic:''},
+      {text:'Saat beliau turun dari Gua Hira gemetar, akulah yang menyelimuti dan berkata: "Allah tidak akan pernah menghinakanmu!"',arabic:'كَلَّا وَاللَّهِ لَا يُخْزِيكَ اللَّهُ أَبَدًا'},
+      {text:'Maukah engkau mempelajari Basmalah — pintu setiap kebaikan yang diajarkan Allah?',arabic:''},
+    ],
+  },
+  {
+    id:'abubakar', tier:1,
+    name:'Abu Bakar Ash-Shiddiq RA',
+    title:'As-Siddiq · Sahabat Setia Nabi ﷺ',
+    portrait:'🧔',
+    tileX:24, tileY:13,
+    questId:'fatiha2',
+    drawCfg:{robeColor:'#4A6AB8',robeShade:'#3A5A98',headwrap:'#E0E0F8',headwrapAccent:'#8090D0',hasBeard:true,beardColor:'#3A3050',haloColor:'rgba(100,120,200,0.2)'},
+    dialogs:[
+      {text:'Ya akhi! Aku Abu Bakar. Orang pertama dari lelaki dewasa yang membenarkan kenabian Muhammad ﷺ — itulah mengapa aku dipanggil Ash-Shiddiq.',arabic:''},
+      {text:'Bersama Nabi ﷺ aku hijrah ke Madinah. Di Gua Tsur, beliau berkata: "Jangan sedih, Allah bersama kita."',arabic:'لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا'},
+      {text:'Pelajari Al-Fatihah ayat kedua — pujian kepada Rabb yang memelihara seluruh alam!',arabic:''},
+    ],
+  },
+  {
+    id:'bilal', tier:1,
+    name:'Bilal bin Rabah RA',
+    title:'Sayyidul Muadzdzinin · Muadzin Pertama',
+    portrait:'🎺',
+    tileX:3, tileY:17,
+    questId:'ikhlas',
+    drawCfg:{robeColor:'#607840',robeShade:'#485830',headwrap:'#D8E0C0',headwrapAccent:'#506030',hasBeard:true,beardColor:'#1A1A0A'},
+    dialogs:[
+      {text:'Ahad... Ahad... Satu... Satu! Itulah yang aku ucapkan saat Umayyah menyiksaku di panas terik Mekah.',arabic:'أَحَدٌ أَحَدٌ'},
+      {text:'Aku Bilal — budak Habsyah yang dimerdekakan Abu Bakar, lalu menjadi muadzin pertama Islam.',arabic:''},
+      {text:'Pelajari Surah Al-Ikhlas — tentang keesaan Allah, senilai sepertiga Al-Quran!',arabic:''},
+    ],
+  },
+  {
+    id:'ali', tier:1,
+    name:'Ali bin Abi Thalib RA',
+    title:'Karramallahu Wajhah · Pintu Ilmu',
+    portrait:'⚔️',
+    tileX:27, tileY:6,
+    questId:'kursi',
+    drawCfg:{robeColor:'#801010',robeShade:'#600808',headwrap:'#F0C8C8',headwrapAccent:'#C04040',hasBeard:true,beardColor:'#1A0808',swordInHand:true,haloColor:'rgba(200,50,50,0.15)'},
+    dialogs:[
+      {text:'Salam, pejuang iman! Aku Ali bin Abi Thalib. Rasulullah ﷺ berkata: "Aku kota ilmu dan Ali adalah pintunya."',arabic:'أَنَا مَدِينَةُ الْعِلْمِ وَعَلِيٌّ بَابُهَا'},
+      {text:'Malam hijrah, aku tidur di ranjang Nabi ﷺ menggantikan beliau. Inilah pengorbanan jiwa untuk iman.',arabic:''},
+      {text:'Ayat Kursi — ayat teragung Al-Quran. Siap mempelajarinya?',arabic:''},
+    ],
+  },
+
+  // ── TIER 2 ──────────────────────────────────────────
+  {
+    id:'umar', tier:2,
+    name:'Umar bin Khattab RA',
+    title:'Al-Faruq · Khalifah Kedua',
+    portrait:'🗡️',
+    tileX:6, tileY:5,
+    questId:'falaq',
+    drawCfg:{robeColor:'#3A5A3A',robeShade:'#2A4A2A',headwrap:'#C0D0C0',headwrapAccent:'#506850',hasBeard:true,beardColor:'#2A1A0A',haloColor:'rgba(80,120,80,0.2)'},
+    dialogs:[
+      {text:'Aku Umar bin Khattab! Dulu aku musuh Islam yang paling keras. Tapi Allah membalikkan hatiku — itulah kekuatan hidayah.',arabic:''},
+      {text:'Masuk Islamku membuat kaum muslimin semakin berani shalat di Masjidil Haram secara terang-terangan.',arabic:''},
+      {text:'Ku ajarkan engkau Al-Falaq — doa perlindungan di pagi hari dari segala kejahatan.',arabic:''},
+    ],
+  },
+  {
+    id:'aisyah', tier:2,
+    name:'Sayyidah Aisyah RA',
+    title:'Ummul Mukminin · Guru Para Sahabat',
+    portrait:'📚',
+    tileX:20, tileY:3,
+    questId:'nas',
+    drawCfg:{robeColor:'#C87898',robeShade:'#A85878',headwrap:'#F8E0E8',headwrapAccent:'#D090A0',hasBeard:false,haloColor:'rgba(200,100,150,0.2)'},
+    dialogs:[
+      {text:'Assalamu\'alaikum! Aku Aisyah, istri Rasulullah ﷺ. Para sahabat datang kepadaku untuk belajar hadits dan hukum Islam.',arabic:''},
+      {text:'Aku hafal ribuan hadits. Ilmu adalah cahaya — dan wanita pun berhak atasnya sepenuhnya.',arabic:''},
+      {text:'Pelajari An-Nās bersamaku — perlindungan dari bisikan setan yang tersembunyi.',arabic:''},
+    ],
+  },
+  {
+    id:'aisyah2', tier:2,
+    name:'Sayyidah Aisyah RA',
+    title:'Ummul Mukminin · Guru Para Sahabat',
+    portrait:'📚',
+    tileX:28, tileY:18,
+    questId:'fatiha3',
+    drawCfg:{robeColor:'#C87898',robeShade:'#A85878',headwrap:'#F8E0E8',headwrapAccent:'#D090A0',hasBeard:false},
+    dialogs:[
+      {text:'Kembali lagi! Bagus — pencari ilmu sejati tidak pernah berhenti.',arabic:''},
+      {text:'Nabi ﷺ mengajariku bahwa Al-Fatihah adalah "umm al-Quran" — induk Al-Quran. Setiap rakaat shalat kita membacanya.',arabic:''},
+      {text:'Mari lanjutkan — pelajari ayat 3 dan 4 Al-Fatihah tentang sifat Allah dan Hari Kiamat.',arabic:''},
+    ],
+  },
+  {
+    id:'aisyah3', tier:2,
+    name:'Sayyidah Aisyah RA',
+    title:'Ummul Mukminin · Guru Para Sahabat',
+    portrait:'📚',
+    tileX:5, tileY:21,
+    questId:'fatiha56',
+    drawCfg:{robeColor:'#C87898',robeShade:'#A85878',headwrap:'#F8E0E8',headwrapAccent:'#D090A0',hasBeard:false},
+    dialogs:[
+      {text:'Barakallah fiik! Engkau sudah jauh. Sekarang pelajari inti Al-Fatihah yang paling agung.',arabic:''},
+      {text:'"Iyyāka naʿbudu" — hanya kepada-Mu kami menyembah. Ini adalah ikrar kita setiap shalat.',arabic:'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ'},
+      {text:'Dan "Ihdinaṣ-ṣirāṭ" — doa paling kita butuhkan: tunjukilah kami jalan yang lurus.',arabic:''},
+    ],
+  },
+
+  // ── TIER 3 ──────────────────────────────────────────
+  {
+    id:'zaid', tier:3,
+    name:'Zaid bin Tsabit RA',
+    title:'Penulis Wahyu · Pengumpul Al-Quran',
+    portrait:'📜',
+    tileX:10, tileY:3,
+    questId:'baqarah1',
+    drawCfg:{robeColor:'#7A6A30',robeShade:'#5A5020',headwrap:'#E8D8A0',headwrapAccent:'#C0A050',hasBeard:true,beardColor:'#3A2A10',scrollInHand:true},
+    dialogs:[
+      {text:'Aku Zaid bin Tsabit — penulis wahyu Rasulullah ﷺ dan pengumpul mushaf Al-Quran pertama di zaman Abu Bakar.',arabic:''},
+      {text:'Aku hafal seluruh Al-Quran sejak kecil. Nabi ﷺ memintaku belajar bahasa Ibrani dan Suryani dalam 17 hari untuk kebutuhan umat.',arabic:''},
+      {text:'Pelajari awal Al-Baqarah — surah terpanjang Al-Quran yang penuh hikmah dan hukum.',arabic:''},
+    ],
+  },
+  {
+    id:'muadz', tier:3,
+    name:'Muadz bin Jabal RA',
+    title:'Ahli Fikih · Guru di Yaman',
+    portrait:'🌙',
+    tileX:25, tileY:21,
+    questId:'ali_imran',
+    drawCfg:{robeColor:'#305878',robeShade:'#204060',headwrap:'#B8C8E0',headwrapAccent:'#4870A0',hasBeard:true,beardColor:'#1A2030',staffInHand:true},
+    dialogs:[
+      {text:'Aku Muadz bin Jabal. Nabi ﷺ berkata: "Yang paling tahu halal haram di umatku adalah Muadz bin Jabal."',arabic:''},
+      {text:'Rasulullah ﷺ pernah menangis membaca ayat Ali Imrān 190-191 ini dan berkata kepada siapa yang tidak merenunginya.',arabic:''},
+      {text:'Pelajari ayat ini — tentang tanda-tanda kebesaran Allah di alam semesta untuk ulul albab!',arabic:''},
+    ],
+  },
+  {
+    id:'salman', tier:3,
+    name:'Salman Al-Farisi RA',
+    title:'Pencari Kebenaran · Sahabat Mulia',
+    portrait:'🗺️',
+    tileX:2, tileY:2,
+    questId:'luqman',
+    drawCfg:{robeColor:'#6A5040',robeShade:'#503C30',headwrap:'#D0C0A0',headwrapAccent:'#806040',hasBeard:true,beardColor:'#2A1A0A'},
+    dialogs:[
+      {text:'Aku Salman Al-Farisi — berasal dari Persia, menempuh ribuan mil mencari agama yang benar hingga bertemu Rasulullah ﷺ.',arabic:''},
+      {text:'Nabi ﷺ bersabda tentangku: "Salman adalah bagian dari kami, Ahlul Bait." — Begitulah Islam menghapus batas suku dan bangsa.',arabic:''},
+      {text:'Pelajari nasihat Luqman kepada anaknya — wasiat yang relevan untuk semua zaman.',arabic:''},
+    ],
+  },
+  {
+    id:'ibnu_masud', tier:3,
+    name:'Abdullah bin Masud RA',
+    title:'Muqri\' Pertama · Ahli Quran',
+    portrait:'✨',
+    tileX:29, tileY:10,
+    questId:'isra',
+    drawCfg:{robeColor:'#484060',robeShade:'#382848',headwrap:'#D0C8E0',headwrapAccent:'#6858A0',hasBeard:true,beardColor:'#1A1428',scrollInHand:true,haloColor:'rgba(100,80,160,0.2)'},
+    dialogs:[
+      {text:'Aku Abdullah bin Masud. Aku adalah orang pertama yang membaca Al-Quran keras-keras di Masjidil Haram, dipukuli karena itu — tapi aku tidak berhenti.',arabic:''},
+      {text:'Nabi ﷺ berkata: "Ambillah Al-Quran dari empat orang: Ibn Masud, Salim, Muadz, dan Ubayy."',arabic:''},
+      {text:'Pelajari Al-Isrā\' 23 — ayat yang menggabungkan tauhid dengan birrul walidain. Dua pilar kehidupan seorang mukmin.',arabic:''},
+    ],
+  },
+];
+
+// Landmark signs
+const SIGNS = [
+  {tileX:13,tileY:2,  label:'Masjid Al-Haram', icon:'🕌', desc:'Masjid suci pusat Islam. Di sinilah Ka\'bah — arah kiblat seluruh umat Muslim di dunia.'},
+  {tileX:3, tileY:10, label:'Telaga Al-Kautsar',icon:'💧', desc:'Kolam surga dijanjikan Allah. Airnya lebih putih dari susu, lebih manis dari madu.'},
+  {tileX:24,tileY:19, label:'Pasar Madinah',    icon:'🏪', desc:'Sahabat berdagang jujur dan amanah. Setiap transaksi halal adalah ibadah bila niatnya benar.'},
+  {tileX:16,tileY:20, label:'Gua Hira',         icon:'⛰️', desc:'Di sinilah turun wahyu pertama kepada Nabi ﷺ: "Iqra\' — Bacalah!" Awal mula cahaya Islam.'},
+  {tileX:8, tileY:21, label:'Kebun Kurma',      icon:'🌴', desc:'Para sahabat bekerja keras dan bersedekah dari kebun mereka. Setiap pohon yang ditanam adalah shadaqah jariyah.'},
+  {tileX:22,tileY:8,  label:'Rumah Arqam',      icon:'🏠', desc:'Tempat pertemuan rahasia para sahabat pertama mempelajari Islam sebelum hijrah.'},
+];
+
+// ═══════════════════════════════════════════════════════
+// PLAYER
+// ═══════════════════════════════════════════════════════
+const player = {
+  x: 10 * T + T/2, y: 12 * T + T/2,
+  w: 10, h: 14,
+  speed: 1.4, sprintMult: 2.0,
+  dir: 'down', moving: false, sprinting: false,
+  walkTimer: 0, stepTimer: 0,
+  // Stats
+  hp:100, maxHp:100, xp:0, xpNext:100,
+  level:1, coins:0, questsDone:0,
+  hafalan:[], badges:[],
+  ranks:['Thalibul Ilmi','Santri','Qari','Hafizh Muda','Mujahid Ilmu','Ulama Muda','Syaikh','Mujtahid','Waliyullah','Hujjatul Islam','Khatimul Huffazh','Sulthanul Ulama'],
+};
+
+// ═══════════════════════════════════════════════════════
+// GAME STATE
+// ═══════════════════════════════════════════════════════
+const gameState = {
+  running: false,
+  dialogOpen: false,
+  questOpen: false,
+  frame: 0,
+  npc: {},   // id -> {done}
+  camX: 0, camY: 0,
+};
+NPCS.forEach(n => gameState.npc[n.id] = {done:false});
+
+// ═══════════════════════════════════════════════════════
+// INPUT — Keyboard + D-pad
+// ═══════════════════════════════════════════════════════
+const keys = {up:false,down:false,left:false,right:false,sprint:false};
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowUp'||e.key==='w'||e.key==='W') keys.up=true;
+  if(e.key==='ArrowDown'||e.key==='s'||e.key==='S') keys.down=true;
+  if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A') keys.left=true;
+  if(e.key==='ArrowRight'||e.key==='d'||e.key==='D') keys.right=true;
+  if(e.key==='Shift') keys.sprint=true;
+  if(e.key==='e'||e.key==='E'||e.key===' '){
+    e.preventDefault();
+    if(gameState.dialogOpen) advanceDialog();
+    else if(gameState.running) tryInteract();
+  }
+});
+document.addEventListener('keyup', e => {
+  if(e.key==='ArrowUp'||e.key==='w'||e.key==='W') keys.up=false;
+  if(e.key==='ArrowDown'||e.key==='s'||e.key==='S') keys.down=false;
+  if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A') keys.left=false;
+  if(e.key==='ArrowRight'||e.key==='d'||e.key==='D') keys.right=false;
+  if(e.key==='Shift') keys.sprint=false;
+});
+
+// D-pad buttons
+function dpadBind(id, key) {
+  const el = document.getElementById(id);
+  const on  = ()=>{ keys[key]=true;  el.classList.add('pressed'); };
+  const off = ()=>{ keys[key]=false; el.classList.remove('pressed'); };
+  el.addEventListener('touchstart',  e=>{e.preventDefault();on();},  {passive:false});
+  el.addEventListener('touchend',    e=>{e.preventDefault();off();}, {passive:false});
+  el.addEventListener('touchcancel', e=>{e.preventDefault();off();}, {passive:false});
+  el.addEventListener('mousedown',   on);
+  el.addEventListener('mouseup',     off);
+  el.addEventListener('mouseleave',  off);
+}
+dpadBind('dpUp','up');
+dpadBind('dpDown','down');
+dpadBind('dpLeft','left');
+dpadBind('dpRight','right');
+
+// Sprint toggle button
+let sprintToggle = false;
+const sprintBtn = document.getElementById('btnSprint');
+function toggleSprint() {
+  sprintToggle = !sprintToggle;
+  keys.sprint = sprintToggle;
+  sprintBtn.classList.toggle('active', sprintToggle);
+}
+sprintBtn.addEventListener('touchstart', e=>{e.preventDefault();toggleSprint();},{passive:false});
+sprintBtn.addEventListener('click', toggleSprint);
+
+// Interact button — debounced to prevent double-fire on mobile (touchend + click)
+const interactBtn = document.getElementById('btnInteract');
+let interactDebounce=false;
+function onInteract() {
+  if(interactDebounce) return;
+  interactDebounce=true;
+  setTimeout(()=>{ interactDebounce=false; }, 250);
+  if(gameState.dialogOpen) advanceDialog();
+  else if(!gameState.questOpen && gameState.running) tryInteract();
+}
+interactBtn.addEventListener('touchend', e=>{ e.preventDefault(); e.stopPropagation(); onInteract(); },{passive:false});
+interactBtn.addEventListener('click', onInteract);
+
+// Dialog overlay — touchend only (prevents ghost click firing advanceDialog twice on mobile)
+document.getElementById('dialogOverlay').addEventListener('touchend', e=>{
+  e.preventDefault();
+  e.stopPropagation();
+  advanceDialog();
+},{passive:false});
+// Desktop fallback click (only fires if no touch)
+document.getElementById('dialogOverlay').addEventListener('click', advanceDialog);
+
+// ═══════════════════════════════════════════════════════
+// COLLISION
+// ═══════════════════════════════════════════════════════
+function worldSolid(wx, wy) {
+  const c = Math.floor(wx / T);
+  const r = Math.floor(wy / T);
+  if(isSolid(c,r)) return true;
+  for(const npc of NPCS){
+    if(c===npc.tileX && r===npc.tileY) return true;
+  }
+  return false;
+}
+
+function movePlayer(dx, dy) {
+  if(dx===0 && dy===0) return;
+  const spd = player.speed * (keys.sprint ? player.sprintMult : 1) * (dx!==0&&dy!==0 ? 0.707 : 1);
+  const mx = dx * spd, my = dy * spd;
+  const m = 2;
+  const px = player.x, py = player.y;
+  const pw = player.w, ph = player.h;
+
+  const nx = px + mx;
+  if(!worldSolid(nx-pw/2+m, py-ph/2+m) &&
+     !worldSolid(nx+pw/2-m, py-ph/2+m) &&
+     !worldSolid(nx-pw/2+m, py+ph/2-m) &&
+     !worldSolid(nx+pw/2-m, py+ph/2-m)){
+    player.x = Math.max(T, Math.min(nx, (COLS-1)*T));
+  }
+
+  const ny = py + my;
+  if(!worldSolid(player.x-pw/2+m, ny-ph/2+m) &&
+     !worldSolid(player.x+pw/2-m, ny-ph/2+m) &&
+     !worldSolid(player.x-pw/2+m, ny+ph/2-m) &&
+     !worldSolid(player.x+pw/2-m, ny+ph/2-m)){
+    player.y = Math.max(T, Math.min(ny, (ROWS-1)*T));
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// CAMERA
+// ═══════════════════════════════════════════════════════
+function updateCamera() {
+  const targetX = player.x - VIEW_W / 2;
+  const targetY = player.y - VIEW_H / 2;
+  const maxX = COLS*T - VIEW_W;
+  const maxY = ROWS*T - VIEW_H;
+  gameState.camX += (Math.max(0, Math.min(targetX, maxX)) - gameState.camX) * 0.12;
+  gameState.camY += (Math.max(0, Math.min(targetY, maxY)) - gameState.camY) * 0.12;
+}
+
+// ═══════════════════════════════════════════════════════
+// SIGN PIXEL ART
+// ═══════════════════════════════════════════════════════
+function drawSign(sx, sy) {
+  // Post
+  rect(sx+6, sy+10, 3, 6, '#8B6914');
+  rect(sx+7, sy+10, 1, 6, '#A07820');
+  // Board
+  rect(sx+1, sy+2, 13, 9, '#C8985A');
+  rect(sx+2, sy+3, 11, 7, '#DEB870');
+  // Border
+  ctx.strokeStyle='#8B6914'; ctx.lineWidth=1;
+  ctx.strokeRect(sx+1.5, sy+2.5, 12, 8);
+  // Peg dots
+  rect(sx+3, sy+2, 2, 2, '#8B6914');
+  rect(sx+10, sy+2, 2, 2, '#8B6914');
+}
+
+// ═══════════════════════════════════════════════════════
+// MOSQUE DECORATION (drawn over tiles in mosque area)
+// ═══════════════════════════════════════════════════════
+function drawMosqueDeco(cx, cy) {
+  // cx,cy = center top in screen coords
+  // Main dome base
+  const bx = cx - 16, by = cy;
+  rect(bx, by+8, 32, 18, '#C4A88A');
+  // Dome
+  ctx.fillStyle='#BEA078';
+  ctx.beginPath(); ctx.arc(cx, by+10, 14, Math.PI, 0); ctx.fill();
+  ctx.fillStyle='#C9A84C';
+  ctx.beginPath(); ctx.arc(cx, by+10, 12, Math.PI, 0); ctx.fill();
+  // Dome highlight
+  ctx.fillStyle='rgba(255,255,255,0.15)';
+  ctx.beginPath(); ctx.arc(cx-3, by+6, 4, Math.PI, 0); ctx.fill();
+  // Crescent
+  ctx.fillStyle='#F0D080';
+  ctx.font='8px serif'; ctx.textAlign='center';
+  ctx.fillText('☽', cx, by+3);
+  // Door
+  rect(bx+10, by+16, 12, 10, '#8B6914');
+  ctx.fillStyle='#7A5808';
+  ctx.beginPath(); ctx.arc(cx, by+16, 6, Math.PI, 0); ctx.fill();
+  rect(bx+12, by+16, 8, 10, '#7A5808');
+  // Windows
+  rect(bx+2, by+14, 5, 5, '#7A5808');
+  rect(bx+25, by+14, 5, 5, '#7A5808');
+  ctx.fillStyle='#7A5808';
+  ctx.beginPath(); ctx.arc(bx+4, by+14, 2.5, Math.PI, 0); ctx.fill();
+  ctx.beginPath(); ctx.arc(bx+27, by+14, 2.5, Math.PI, 0); ctx.fill();
+  // Minaret left
+  rect(bx-4, by+2, 4, 22, '#B09060');
+  rect(bx-3, by, 2, 3, '#C9A84C');
+  // Minaret right
+  rect(bx+32, by+2, 4, 22, '#B09060');
+  rect(bx+33, by, 2, 3, '#C9A84C');
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function render() {
+  ctx.clearRect(0, 0, VIEW_W, VIEW_H);
+
+  const camX = Math.floor(gameState.camX);
+  const camY = Math.floor(gameState.camY);
+
+  // Visible tile range
+  const startCol = Math.floor(camX / T);
+  const startRow = Math.floor(camY / T);
+  const endCol   = Math.min(startCol + VIEWPORT_TILES_X + 2, COLS);
+  const endRow   = Math.min(startRow + VIEWPORT_TILES_Y + 2, ROWS);
+
+  // Draw tiles
+  for (let r = startRow; r < endRow; r++) {
+    for (let c = startCol; c < endCol; c++) {
+      const sx = c * T - camX;
+      const sy = r * T - camY;
+      drawTile(sx, sy, tileAt(c, r), c, r);
+    }
+  }
+
+  // Mosque deco (fixed position in world)
+  const mosqueWorldX = 15 * T - 16;
+  const mosqueWorldY = 1  * T - 2;
+  const msx = mosqueWorldX - camX;
+  const msy = mosqueWorldY - camY;
+  if (msx > -80 && msx < VIEW_W+80 && msy > -40 && msy < VIEW_H+40) {
+    drawMosqueDeco(msx + 16, msy);
+  }
+
+  // Signs
+  for (const sign of SIGNS) {
+    const sx = sign.tileX * T - camX;
+    const sy = sign.tileY * T - camY;
+    if (sx>-20&&sx<VIEW_W+20&&sy>-20&&sy<VIEW_H+20) {
+      drawSign(sx, sy);
+      // Icon
+      ctx.font='8px serif'; ctx.textAlign='center';
+      ctx.fillText(sign.icon, sx+7, sy+9);
+    }
+  }
+
+  // NPCs
+  for (const npc of NPCS) {
+    const sx = npc.tileX * T - camX;
+    const sy = npc.tileY * T - camY;
+    if (sx<-20||sx>VIEW_W+20||sy<-20||sy>VIEW_H+20) continue;
+
+    const ns = gameState.npc[npc.id];
+    const dcfg = npc.drawCfg || {};
+    drawCharacter(sx, sy, {
+      ...dcfg,
+      walkFrame: 0, // NPCs stand still
+    });
+
+    // Quest ! indicator
+    if (!ns.done) {
+      const alpha = 0.7 + Math.sin(gameState.frame * 0.12) * 0.3;
+      ctx.fillStyle=`rgba(255,215,0,${alpha})`;
+      ctx.font='bold 10px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('!', sx+7, sy-3);
+      // small bubble
+      ctx.fillStyle=`rgba(255,200,0,${alpha*0.3})`;
+      ctx.beginPath(); ctx.arc(sx+7, sy-6, 5, 0, Math.PI*2); ctx.fill();
+    } else {
+      ctx.fillStyle='#4CAF75';
+      ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('✓', sx+7, sy-3);
+    }
+
+    // Proximity name (when close)
+    const pdx = Math.abs(player.x - (npc.tileX*T+T/2));
+    const pdy = Math.abs(player.y - (npc.tileY*T+T/2));
+    if (pdx < T*3 && pdy < T*3) {
+      const tw = npc.name.length * 4 + 6;
+      const tx = sx + 7 - tw/2;
+      const ty = sy - 14;
+      ctx.fillStyle='rgba(5,10,25,0.9)';
+      ctx.fillRect(tx, ty, tw, 10);
+      ctx.fillStyle='#F0D080';
+      ctx.font='6px monospace'; ctx.textAlign='left';
+      ctx.fillText(npc.name.substring(0,18), tx+3, ty+8);
+    }
+  }
+
+  // Player
+  const psx = Math.floor(player.x - camX - player.w/2);
+  const psy = Math.floor(player.y - camY - player.h/2);
+  drawCharacter(psx, psy-4, {
+    robeColor:'#F2EFE7', robeShade:'#D8D5CC',
+    headwrap:'#E8E8E0', headwrapAccent:'#3D7A22',
+    walkFrame: player.moving ? player.walkTimer : 0,
+    facingUp: player.dir === 'up',
+    scrollInHand: true,
+    sprinting: player.sprinting,
+  });
+
+  // Player "YOU" indicator (small arrow above)
+  if(gameState.frame%40<20){
+    ctx.fillStyle='rgba(200,160,60,0.8)';
+    ctx.beginPath();
+    ctx.moveTo(psx+7, psy-8);
+    ctx.lineTo(psx+4, psy-4);
+    ctx.lineTo(psx+10, psy-4);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Vignette
+  const vig = ctx.createRadialGradient(VIEW_W/2,VIEW_H/2,VIEW_W*0.2,VIEW_W/2,VIEW_H/2,VIEW_W*0.7);
+  vig.addColorStop(0,'rgba(0,0,0,0)');
+  vig.addColorStop(1,'rgba(0,0,0,0.45)');
+  ctx.fillStyle=vig;
+  ctx.fillRect(0,0,VIEW_W,VIEW_H);
+}
+
+// ═══════════════════════════════════════════════════════
+// UPDATE
+// ═══════════════════════════════════════════════════════
+function update() {
+  if(!gameState.running) return;
+
+  let dx=0, dy=0;
+  if(keys.up)    dy=-1;
+  if(keys.down)  dy=1;
+  if(keys.left)  dx=-1;
+  if(keys.right) dx=1;
+
+  player.sprinting = keys.sprint;
+  player.moving = dx!==0||dy!==0;
+
+  if(player.moving){
+    if(dx<0) player.dir='left';
+    if(dx>0) player.dir='right';
+    if(dy<0) player.dir='up';
+    if(dy>0) player.dir='down';
+    movePlayer(dx,dy);
+    player.walkTimer += 0.18 * (player.sprinting?1.8:1);
+    player.stepTimer++;
+    if(player.stepTimer>(player.sprinting?8:14)){
+      playSfx('step'); player.stepTimer=0;
+    }
+  } else {
+    player.walkTimer=0;
+  }
+
+  updateCamera();
+  gameState.frame++;
+}
+
+// ═══════════════════════════════════════════════════════
+// INTERACTION
+// ═══════════════════════════════════════════════════════
+function tryInteract() {
+  const pc = Math.floor(player.x/T);
+  const pr = Math.floor(player.y/T);
+
+  for(const npc of NPCS){
+    if(Math.abs(npc.tileX-pc)<=1 && Math.abs(npc.tileY-pr)<=1){
+      startDialog(npc); return;
+    }
+  }
+  for(const sign of SIGNS){
+    if(Math.abs(sign.tileX-pc)<=1 && Math.abs(sign.tileY-pr)<=1){
+      startSignDialog(sign); return;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// DIALOG
+// ═══════════════════════════════════════════════════════
+let dlgNpc=null, dlgIdx=0, twTimer=null, twDone=false;
+let dlgDebounce=false; // prevent double-fire on mobile (touchend + click)
+
+function startDialog(npc){
+  dlgNpc=npc; dlgIdx=0;
+  gameState.dialogOpen=true; gameState.running=false;
+  dlgDebounce=false;
+  playSfx('interact');
+  showDlg(npc,0);
+}
+function startSignDialog(sign){
+  dlgNpc={name:sign.label,title:'📋 Papan Informasi',portrait:sign.icon,
+          dialogs:[{text:sign.desc,arabic:''}],id:'_sign'};
+  dlgIdx=0; gameState.dialogOpen=true; gameState.running=false;
+  dlgDebounce=false;
+  playSfx('open');
+  showDlg(dlgNpc,0);
+}
+function showDlg(npc,idx){
+  const d=npc.dialogs[idx];
+  document.getElementById('dlgPortrait').textContent=npc.portrait;
+  document.getElementById('dlgName').textContent=npc.name;
+  document.getElementById('dlgTitleEl').textContent=npc.title||'';
+  const aEl=document.getElementById('dlgArabic');
+  aEl.textContent=d.arabic; aEl.style.display=d.arabic?'block':'none';
+  const tEl=document.getElementById('dlgText');
+  tEl.textContent=''; twDone=false; clearTimeout(twTimer);
+  document.getElementById('dialogOverlay').style.display='block';
+  let i=0;
+  function type(){
+    if(i<d.text.length){tEl.textContent+=d.text[i++];twTimer=setTimeout(type,i%4===0?22:14);}
+    else twDone=true;
+  }
+  type();
+}
+function advanceDialog(){
+  if(!gameState.dialogOpen || !dlgNpc) return;
+  if(dlgDebounce) return;
+  dlgDebounce=true;
+  setTimeout(()=>{ dlgDebounce=false; }, 120); // 120ms cooldown
+
+  if(!twDone){
+    clearTimeout(twTimer);
+    document.getElementById('dlgText').textContent=dlgNpc.dialogs[dlgIdx].text;
+    twDone=true;
+    return;
+  }
+  dlgIdx++;
+  if(dlgIdx<dlgNpc.dialogs.length){
+    showDlg(dlgNpc,dlgIdx);
+  } else {
+    document.getElementById('dialogOverlay').style.display='none';
+    gameState.dialogOpen=false;
+    // Capture npc ref before nulling, pass into timeout closure
+    const finishedNpc=dlgNpc;
+    dlgNpc=null;
+    const ns=gameState.npc[finishedNpc.id];
+    if(finishedNpc.id!=='_sign' && ns && !ns.done){
+      setTimeout(()=>openQuestModal(finishedNpc), 200);
+    } else {
+      gameState.running=true;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// QUEST MODAL
+// ═══════════════════════════════════════════════════════
+let curQuestNpc=null;
+let questAnswered=false; // prevent double-answer
+
+function openQuestModal(npc){
+  if(!npc || !npc.questId) return; // guard
+  curQuestNpc=npc;
+  questAnswered=false;
+  gameState.questOpen=true; gameState.running=false;
+  const q=QURAN.find(q=>q.id===npc.questId);
+  if(!q){ gameState.running=true; return; }
+
+  document.getElementById('qmTitle').textContent=`📖 ${q.surah}`;
+  document.getElementById('qmSub').textContent=`Ayat ${q.ayat} · ${q.xp} XP · ${q.coins} Dinar`;
+  const body=document.getElementById('qmBody');
+  const letters=['A','B','C','D'];
+  body.innerHTML=`
+    <div class="ayat-card">
+      <div class="ay-arabic">${q.arabic}</div>
+      <div class="ay-latin">${q.latin}</div>
+      <div class="ay-trans">"${q.trans}"</div>
+    </div>
+    <div class="npc-hint">
+      <div class="nh-icon">${npc.portrait}</div>
+      <div><strong>${npc.name}:</strong> ${q.hint}</div>
+    </div>
+    <div class="q-question">❓ ${q.question}</div>
+    <div class="q-options" id="qOptWrap"></div>
+    <div id="qResult"></div>
+  `;
+  // Attach options via JS (no inline onclick) to avoid closure issues
+  const optWrap=document.getElementById('qOptWrap');
+  q.opts.forEach((o,i)=>{
+    const btn=document.createElement('button');
+    btn.className='q-opt';
+    btn.innerHTML=`<span class="opt-letter">${letters[i]}</span>${o}`;
+    btn.addEventListener('touchend', e=>{ e.preventDefault(); answerQ(i, btn, q); }, {passive:false});
+    btn.addEventListener('click', ()=>answerQ(i, btn, q));
+    optWrap.appendChild(btn);
+  });
+  document.getElementById('questModal').classList.add('open');
+  playSfx('open');
+}
+
+function answerQ(chosen, btn, q) {
+  if(questAnswered) return; // prevent double-tap
+  if(!curQuestNpc || !q) return; // guard
+  questAnswered=true;
+
+  document.querySelectorAll('.q-opt').forEach(b=>{
+    b.disabled=true;
+    // Remove all listeners by replacing with clone
+    const clone=b.cloneNode(true);
+    b.parentNode.replaceChild(clone,b);
+  });
+  // Re-mark correct after clone (querySelectorAll again)
+  document.querySelectorAll('.q-opt').forEach((b,i)=>{
+    if(i===q.correct) b.classList.add('correct');
+    if(i===chosen && chosen!==q.correct) b.classList.add('wrong');
+  });
+
+  const res=document.getElementById('qResult');
+  const ok=chosen===q.correct;
+
+  // Snapshot npc reference for closures
+  const npcSnap=curQuestNpc;
+
+  if(ok){
+    playSfx('correct');
+    gainXP(q.xp); gainCoins(q.coins);
+    player.questsDone++;
+    gameState.npc[npcSnap.id].done=true;
+    addHafalan(q); checkBadges(); updateQuestStrip();
+    res.innerHTML=`
+      <div class="res-ok">✅ MasyaAllah! Benar!</div>
+      <div class="res-xp">+${q.xp} XP &nbsp; +${q.coins} Dinar ✨</div>
+      <div class="res-exp">${q.explanation}</div>`;
+    const claimBtn=document.createElement('button');
+    claimBtn.className='btn-claim';
+    claimBtn.textContent='Lanjutkan Perjalanan →';
+    claimBtn.addEventListener('touchend',e=>{e.preventDefault();closeQuestModal();},{passive:false});
+    claimBtn.addEventListener('click',closeQuestModal);
+    res.appendChild(claimBtn);
+    showFloatingXP(q.xp);
+  } else {
+    playSfx('wrong');
+    res.innerHTML=`
+      <div class="res-ng">❌ Belum tepat</div>
+      <div class="res-exp">${q.explanation}</div>`;
+    const claimBtn=document.createElement('button');
+    claimBtn.className='btn-claim';
+    claimBtn.textContent='Coba Lagi Nanti';
+    claimBtn.style.background='linear-gradient(135deg,#3A2510,#5A3520)';
+    claimBtn.addEventListener('touchend',e=>{e.preventDefault();closeQuestModal();},{passive:false});
+    claimBtn.addEventListener('click',closeQuestModal);
+    res.appendChild(claimBtn);
+  }
+}
+
+function closeQuestModal(){
+  document.getElementById('questModal').classList.remove('open');
+  gameState.questOpen=false; gameState.running=true;
+  curQuestNpc=null; questAnswered=false;
+  updateHUD();
+}
+
+// ═══════════════════════════════════════════════════════
+// PROGRESSION
+// ═══════════════════════════════════════════════════════
+function gainXP(amt){
+  player.xp+=amt;
+  while(player.xp>=player.xpNext){
+    player.xp-=player.xpNext;
+    player.level++;
+    player.xpNext=Math.floor(player.xpNext*1.6);
+    player.maxHp+=10; player.hp=player.maxHp;
+    showLevelUp(player.level);
+  }
+  updateHUD();
+}
+function gainCoins(amt){ player.coins+=amt; showToast(`+${amt} Dinar 💰`); updateHUD(); }
+function addHafalan(q){ if(!player.hafalan.find(h=>h.id===q.id)) player.hafalan.push({id:q.id,surah:q.surah,ayat:q.ayat}); }
+
+const BADGES=[
+  {id:'pemula',    label:'Pemula',          icon:'🌱', need:1},
+  {id:'santri',    label:'Santri Aktif',    icon:'📚', need:3},
+  {id:'huffazh',   label:'Calon Huffazh',   icon:'📖', need:5},
+  {id:'hafizh',    label:'Hafizh Muda',     icon:'🌟', need:7},
+  {id:'mujtahid',  label:'Mujtahid',        icon:'⚡', need:9},
+  {id:'ulama',     label:'Ulama Muda',      icon:'🏛️', need:10},
+  {id:'imam',      label:'Imam Besar',      icon:'👑', need:11},
+  {id:'sultan',    label:'Sulthanul Ulama', icon:'✨', need:12},
+];
+function checkBadges(){
+  BADGES.forEach(b=>{
+    if(player.questsDone>=b.need&&!player.badges.includes(b.id)){
+      player.badges.push(b.id);
+      showToast(`🏅 Badge: ${b.label}!`);
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// HUD
+// ═══════════════════════════════════════════════════════
+function updateHUD(){
+  document.getElementById('barHp').style.width=(player.hp/player.maxHp*100)+'%';
+  document.getElementById('barXp').style.width=(player.xp/player.xpNext*100)+'%';
+  document.getElementById('valHp').textContent=player.hp;
+  document.getElementById('valXp').textContent=player.xp;
+  document.getElementById('lvNum').textContent=player.level;
+  document.getElementById('coinNum').textContent='🪙'+player.coins;
+}
+function updateQuestStrip(){
+  const strip=document.getElementById('questStrip');
+  const tierLabels={1:'⭐ Tier 1',2:'⭐⭐ Tier 2',3:'⭐⭐⭐ Tier 3'};
+  let html='';
+  [1,2,3].forEach(tier=>{
+    const tierNpcs=NPCS.filter(n=>n.tier===tier);
+    const doneCount=tierNpcs.filter(n=>gameState.npc[n.id]?.done).length;
+    const allDone=doneCount===tierNpcs.length;
+    html+=`<div class="qs-tier-label">${tierLabels[tier]} (${doneCount}/${tierNpcs.length})</div>`;
+    tierNpcs.forEach(n=>{
+      const q=QURAN.find(q=>q.id===n.questId);
+      const done=gameState.npc[n.id]?.done;
+      html+=`<div class="qs-chip ${done?'done':'open'}">${done?'✓':'!'} ${q?.surah||n.id}</div>`;
+    });
+  });
+  strip.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════════════════
+// LEVEL UP OVERLAY
+// ═══════════════════════════════════════════════════════
+function showLevelUp(lv){
+  playSfx('levelup');
+  const ov=document.getElementById('lvlUpOverlay');
+  document.getElementById('luNum').textContent=lv;
+  document.getElementById('luRank').textContent=player.ranks[Math.min(lv-1,player.ranks.length-1)];
+  ov.classList.add('show');
+  showToast(`🎉 Level Up! Kini Level ${lv}`);
+  setTimeout(()=>ov.classList.remove('show'),2500);
+}
+
+// ═══════════════════════════════════════════════════════
+// TOAST & FLOATING XP
+// ═══════════════════════════════════════════════════════
+function showToast(msg){
+  const w=document.getElementById('toastWrap');
+  const t=document.createElement('div');
+  t.className='toast'; t.textContent=msg;
+  w.appendChild(t); setTimeout(()=>t.remove(),3100);
+}
+function showFloatingXP(amt){
+  const wrap=document.getElementById('canvasWrap');
+  const el=document.createElement('div');
+  el.className='fxp'; el.textContent=`+${amt} XP`;
+  el.style.left=(wrap.clientWidth/2-20)+'px';
+  el.style.top=(wrap.clientHeight/2)+'px';
+  wrap.appendChild(el); setTimeout(()=>el.remove(),1600);
+}
+
+// ═══════════════════════════════════════════════════════
+// AUDIO
+// ═══════════════════════════════════════════════════════
+let ac=null;
+function getAC(){ if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)(); return ac; }
+function tone(f,type='sine',dur=0.15,vol=0.07){
+  try{
+    const a=getAC(),o=a.createOscillator(),g=a.createGain();
+    o.connect(g);g.connect(a.destination);
+    o.type=type;o.frequency.value=f;
+    g.gain.setValueAtTime(vol,a.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,a.currentTime+dur);
+    o.start(a.currentTime);o.stop(a.currentTime+dur);
+  }catch(e){}
+}
+function playSfx(n){
+  const s={
+    step:()=>tone(180+Math.random()*20,'triangle',0.05,0.025),
+    bump:()=>tone(90,'sawtooth',0.1,0.05),
+    interact:()=>{tone(440,'sine',0.1,0.06);setTimeout(()=>tone(550,'sine',0.1,0.06),80);},
+    correct:()=>[523,659,784,1047].forEach((f,i)=>setTimeout(()=>tone(f,'sine',0.18,0.08),i*80)),
+    wrong:()=>{tone(200,'sawtooth',0.25,0.07);setTimeout(()=>tone(160,'sawtooth',0.25,0.07),150);},
+    levelup:()=>[523,659,784,1047,1319].forEach((f,i)=>setTimeout(()=>tone(f,'sine',0.22,0.09),i*90)),
+    open:()=>tone(330,'sine',0.13,0.06),
+  };
+  s[n]?.();
+}
+
+// ═══════════════════════════════════════════════════════
+// LEADERBOARD — localStorage persistence
+// ═══════════════════════════════════════════════════════
+const LB_KEY='nurAlIman_leaderboard_v1';
+let currentUsername='';
+
+function lbLoad(){
+  try{return JSON.parse(localStorage.getItem(LB_KEY))||[];}catch(e){return[];}
+}
+function lbSave(entries){
+  try{localStorage.setItem(LB_KEY,JSON.stringify(entries));}catch(e){}
+}
+function getTotalXp(){
+  let total=0,thresh=100;
+  for(let i=1;i<player.level;i++){total+=thresh;thresh=Math.floor(thresh*1.6);}
+  return total+player.xp;
+}
+function saveProgress(){
+  if(!currentUsername)return;
+  const entries=lbLoad();
+  const idx=entries.findIndex(e=>e.username===currentUsername);
+  const entry={
+    username:currentUsername,
+    level:player.level,
+    xp:getTotalXp(),
+    questsDone:player.questsDone,
+    coins:player.coins,
+    rank:player.ranks[Math.min(player.level-1,player.ranks.length-1)],
+    ts:Date.now(),
+  };
+  if(idx>=0)entries[idx]=entry; else entries.push(entry);
+  entries.sort((a,b)=>b.questsDone-a.questsDone||b.xp-a.xp);
+  lbSave(entries);
+}
+
+// Patch gainXP to auto-save
+const _gainXP=gainXP;
+gainXP=function(amt){_gainXP(amt);saveProgress();};
+
+// ═══════════════════════════════════════════════════════
+// LEADERBOARD UI
+// ═══════════════════════════════════════════════════════
+const AVATARS=['🧕','🧔','👸','⚔️','📚','🌙','📜','✨','🎺','🗡️','🗺️','🌟'];
+function getAvatar(name){
+  let h=0;for(let i=0;i<name.length;i++)h=(h*31+name.charCodeAt(i))&0xffff;
+  return AVATARS[h%AVATARS.length];
+}
+
+function openLeaderboard(){
+  if(gameState.dialogOpen||gameState.questOpen)return;
+  gameState.running=false;
+  const entries=lbLoad();
+  const podiumEl=document.getElementById('lbPodium');
+  const bodyEl=document.getElementById('lbBody');
+
+  if(entries.length===0){
+    podiumEl.style.display='none';
+    bodyEl.innerHTML=`<div class="lb-empty">Belum ada pemain lain.<br>Jadilah yang pertama menyelesaikan quest! 🌟<br><br>Selesaikan quest, skormu akan tersimpan otomatis.</div>`;
+  } else {
+    podiumEl.style.display='flex';
+    const top3=entries.slice(0,3);
+    // Podium order: 2nd left, 1st center, 3rd right
+    const slots=top3.length>=3?[top3[1],top3[0],top3[2]]:top3.length===2?[top3[1],top3[0]]:[top3[0]];
+    const cls=top3.length>=3?['podium-2','podium-1','podium-3']:top3.length===2?['podium-2','podium-1']:['podium-1'];
+    const crowns=top3.length>=3?['🥈','👑','🥉']:top3.length===2?['🥈','👑']:['👑'];
+    const realNums=top3.length>=3?[2,1,3]:top3.length===2?[2,1]:[1];
+    podiumEl.innerHTML=slots.map((e,pi)=>{
+      if(!e)return'';
+      const isMe=e.username===currentUsername;
+      return `<div class="podium-slot ${cls[pi]}">
+        <div class="podium-crown">${crowns[pi]}</div>
+        <div class="podium-avatar">${getAvatar(e.username)}</div>
+        <div class="podium-name">${isMe?'▶ '+e.username:e.username}</div>
+        <div class="podium-xp">${e.xp} XP</div>
+        <div class="podium-block">${realNums[pi]}</div>
+      </div>`;
+    }).join('');
+
+    // Rows 4+
+    bodyEl.innerHTML=entries.length<=3?'':entries.slice(3).map((e,i)=>{
+      const pos=i+4,isMe=e.username===currentUsername;
+      return `<div class="lb-row ${isMe?'me':''}">
+        <div class="lb-rank-num lb-rank-n">${pos}</div>
+        <div class="lb-avatar">${getAvatar(e.username)}</div>
+        <div class="lb-info">
+          <div class="lb-name">${e.username}${isMe?'<span class="lb-me-badge">◀ KAMU</span>':''}</div>
+          <div class="lb-rank-title">${e.rank||'Thalibul Ilmi'}</div>
+        </div>
+        <div class="lb-scores">
+          <div class="lb-xp">${e.xp} XP</div>
+          <div class="lb-meta"><span class="lb-quests">${e.questsDone} quest</span> · Lv.${e.level}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // Append my row if outside top view
+    const myPos=entries.findIndex(e=>e.username===currentUsername)+1;
+    if(myPos>3&&myPos>3+Math.max(0,entries.length-3)){
+      const me=entries[myPos-1];
+      if(me) bodyEl.innerHTML+=`
+        <div style="text-align:center;padding:6px 0;font-size:9px;color:var(--text2);letter-spacing:1px">— Posisimu —</div>
+        <div class="lb-row me">
+          <div class="lb-rank-num lb-rank-n">${myPos}</div>
+          <div class="lb-avatar">${getAvatar(currentUsername)}</div>
+          <div class="lb-info">
+            <div class="lb-name">${currentUsername}<span class="lb-me-badge">◀ KAMU</span></div>
+            <div class="lb-rank-title">${me.rank}</div>
+          </div>
+          <div class="lb-scores">
+            <div class="lb-xp">${me.xp} XP</div>
+            <div class="lb-meta"><span class="lb-quests">${me.questsDone} quest</span> · Lv.${me.level}</div>
+          </div>
+        </div>`;
+    }
+  }
+  document.getElementById('lbOverlay').classList.add('open');
+  playSfx('open');
+}
+
+function closeLeaderboard(){
+  document.getElementById('lbOverlay').classList.remove('open');
+  if(!gameState.dialogOpen&&!gameState.questOpen)gameState.running=true;
+}
+
+document.getElementById('lbClose').addEventListener('click',closeLeaderboard);
+document.getElementById('lbClose').addEventListener('touchend',e=>{e.preventDefault();closeLeaderboard();},{passive:false});
+const btnLb=document.getElementById('btnLb');
+btnLb.addEventListener('click',openLeaderboard);
+btnLb.addEventListener('touchend',e=>{e.preventDefault();openLeaderboard();},{passive:false});
+
+// ═══════════════════════════════════════════════════════
+// USERNAME SCREEN
+// ═══════════════════════════════════════════════════════
+function initUsernameStars(){
+  const sc=document.getElementById('starsBg2');
+  if(!sc)return;
+  sc.width=window.innerWidth;sc.height=window.innerHeight;
+  const c=sc.getContext('2d');
+  const stars=Array.from({length:80},()=>({
+    x:Math.random()*sc.width,y:Math.random()*sc.height,
+    r:Math.random()*1.2+0.3,ph:Math.random()*Math.PI*2,sp:0.012+Math.random()*0.018,
+  }));
+  function animS2(){
+    c.clearRect(0,0,sc.width,sc.height);
+    stars.forEach(s=>{
+      const a=0.25+Math.sin(s.ph)*0.35+0.25;
+      c.fillStyle=`rgba(255,240,200,${a})`;
+      c.beginPath();c.arc(s.x,s.y,s.r,0,Math.PI*2);c.fill();
+      s.ph+=s.sp;
+    });
+    const unEl=document.getElementById('usernameScreen');
+    if(unEl&&unEl.style.display!=='none') requestAnimationFrame(animS2);
+  }
+  animS2();
+}
+
+function initUsernameScreen(){
+  initUsernameStars();
+  const entries=lbLoad();
+  if(entries.length>0){
+    const savedList=document.getElementById('unSavedList');
+    const savedItems=document.getElementById('unSavedItems');
+    savedList.style.display='block';
+    savedItems.innerHTML=entries.slice(0,5).map(e=>`
+      <div class="un-saved-item" data-name="${e.username}">
+        <div class="un-saved-avatar">${getAvatar(e.username)}</div>
+        <div class="un-saved-info">
+          <div class="un-saved-name">${e.username}</div>
+          <div class="un-saved-rank">${e.rank||'Thalibul Ilmi'} · Lv.${e.level}</div>
+        </div>
+        <div class="un-saved-score">${e.xp} XP</div>
+      </div>`).join('');
+    savedItems.querySelectorAll('.un-saved-item').forEach(el=>{
+      const tap=()=>enterGame(el.dataset.name);
+      el.addEventListener('click',tap);
+      el.addEventListener('touchend',e=>{e.preventDefault();tap();},{passive:false});
+    });
+  }
+  const submit=()=>{
+    const val=document.getElementById('unInput').value.trim();
+    if(!val){
+      document.getElementById('unInput').style.borderColor='#E74C3C';
+      setTimeout(()=>{document.getElementById('unInput').style.borderColor='';},800);
+      return;
+    }
+    enterGame(val);
+  };
+  document.getElementById('unSubmit').addEventListener('click',submit);
+  document.getElementById('unSubmit').addEventListener('touchend',e=>{e.preventDefault();submit();},{passive:false});
+  document.getElementById('unInput').addEventListener('keydown',e=>{if(e.key==='Enter')submit();});
+}
+
+function enterGame(username){
+  currentUsername=username.substring(0,16);
+  document.getElementById('usernameScreen').style.display='none';
+  document.getElementById('titleScreen').classList.add('active');
+  getAC(); playSfx('interact');
+  // Small delay so titleScreen is rendered before canvas size is read
+  setTimeout(initStars, 50);
+}
+
+// ═══════════════════════════════════════════════════════
+// TITLE STARS
+// ═══════════════════════════════════════════════════════
+function initStars(){
+  const sc=document.getElementById('starsBg');
+  if(!sc)return;
+  sc.width=window.innerWidth;sc.height=window.innerHeight;
+  const c=sc.getContext('2d');
+  const stars=Array.from({length:100},()=>({
+    x:Math.random()*sc.width,y:Math.random()*sc.height,
+    r:Math.random()*1.5+0.4,ph:Math.random()*Math.PI*2,sp:0.015+Math.random()*0.02
+  }));
+  function anim(){
+    c.clearRect(0,0,sc.width,sc.height);
+    stars.forEach(s=>{
+      const a=0.3+Math.sin(s.ph)*0.4+0.3;
+      c.fillStyle=`rgba(255,240,200,${a})`;
+      c.beginPath();c.arc(s.x,s.y,s.r,0,Math.PI*2);c.fill();
+      s.ph+=s.sp;
+    });
+    if(document.getElementById('titleScreen').classList.contains('active')) requestAnimationFrame(anim);
+  }
+  anim();
+}
+
+// ═══════════════════════════════════════════════════════
+// MAIN LOOP
+// ═══════════════════════════════════════════════════════
+function loop(){update();render();requestAnimationFrame(loop);}
+
+// ═══════════════════════════════════════════════════════
+// START GAME
+// ═══════════════════════════════════════════════════════
+function startGame(){
+  document.getElementById('titleScreen').classList.remove('active');
+  document.getElementById('gameScreen').style.display='flex';
+  resizeCanvas();
+  updateHUD();
+  updateQuestStrip();
+  gameState.running=true;
+  gameState.camX=player.x-VIEW_W/2;
+  gameState.camY=player.y-VIEW_H/2;
+  requestAnimationFrame(loop);
+  setTimeout(()=>showToast(`Bismillah ${currentUsername}! Jelajahi Madinah 🌙`),500);
+  saveProgress();
+}
+document.getElementById('btnStart').addEventListener('click',()=>{getAC();playSfx('interact');startGame();});
+document.getElementById('btnStart').addEventListener('touchend',e=>{e.preventDefault();getAC();playSfx('interact');startGame();},{passive:false});
+
+// ── BOOT ──
+document.getElementById('usernameScreen').style.display='flex';
+initUsernameScreen();
+</script>
+</body>
+</html>
