@@ -447,6 +447,33 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 @keyframes tIn{from{transform:translateY(-20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 @keyframes tOut{from{opacity:1;}to{opacity:0;transform:translateY(-10px);}}
 
+/* ─── MAKKAH INTRO ─── */
+#introOverlay{
+  position:absolute;inset:0;z-index:88;
+  display:none;flex-direction:column;align-items:center;justify-content:flex-end;
+  background:linear-gradient(to top,rgba(3,8,20,0.98) 0%,rgba(3,8,20,0.6) 60%,rgba(3,8,20,0) 100%);
+  padding:0 20px 32px;
+  pointer-events:all;
+}
+#introOverlay.show{display:flex;}
+.intro-scroll{max-width:340px;width:100%;text-align:center;}
+.intro-era{font-size:10px;color:var(--gold3);letter-spacing:4px;text-transform:uppercase;margin-bottom:6px;}
+.intro-city{font-size:22px;font-weight:700;color:var(--gold2);letter-spacing:2px;margin-bottom:12px;text-shadow:0 0 20px rgba(200,160,60,0.5);}
+.intro-body{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:20px;}
+.intro-verse{
+  font-family:'Scheherazade New',serif;font-size:18px;color:var(--gold2);
+  direction:rtl;text-align:right;line-height:2;margin-bottom:6px;
+}
+.intro-verse-trans{font-size:12px;color:var(--text2);font-style:italic;margin-bottom:20px;}
+.intro-btn{
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  color:#1A0E00;border:none;font-family:'Cinzel',serif;
+  font-size:13px;font-weight:700;letter-spacing:2px;
+  padding:14px 40px;cursor:pointer;
+  clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0% calc(100% - 8px),0% 8px);
+}
+.intro-btn:active{transform:scale(0.97);}
+
 /* ─── ZONE HEADER ─── */
 #zoneHeader{
   position:absolute;top:60px;left:0;right:0;z-index:15;
@@ -562,11 +589,30 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
       🏆
       <div class="lb-btn-lbl">RANK</div>
     </button>
+    <button id="btnChangePlayer" title="Ganti Pemain" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(180,160,120,0.6);font-size:11px;padding:4px 8px;cursor:pointer;flex-shrink:0;line-height:1.2;text-align:center;">
+      👤<div style="font-size:9px;letter-spacing:1px;color:rgba(180,160,120,0.5)">GANTI</div>
+    </button>
   </div>
 
   <!-- CANVAS -->
   <div id="canvasWrap">
     <canvas id="gc"></canvas>
+
+    <!-- MAKKAH INTRO -->
+    <div id="introOverlay">
+      <div class="intro-scroll">
+        <div class="intro-era">☽ Makkah Al-Mukarramah · ~610 M</div>
+        <div class="intro-city">نور الإيمان</div>
+        <div class="intro-body">
+          Di kota ini, di antara padang pasir dan tebing batu, Allah mulai menurunkan wahyu kepada Muhammad ﷺ.<br><br>
+          Para sahabat pertama berjuang mempertahankan iman mereka di tengah tekanan, penyiksaan, dan pengucilan.<br><br>
+          Jelajahi kota Makkah, temui para sahabat mulia, dan pelajari kalam Allah yang menjadi cahaya pertama Islam.
+        </div>
+        <div class="intro-verse">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</div>
+        <div class="intro-verse-trans">"Bacalah dengan nama Tuhanmu yang menciptakan" — Al-'Alaq: 1<br>Wahyu pertama yang turun kepada Nabi ﷺ</div>
+        <button class="intro-btn" id="introBtn">▶ &nbsp;Mulai Perjalanan</button>
+      </div>
+    </div>
 
     <!-- DIALOG -->
     <div id="dialogOverlay">
@@ -2339,6 +2385,15 @@ const btnLb=document.getElementById('btnLb');
 btnLb.addEventListener('click',openLeaderboard);
 btnLb.addEventListener('touchend',e=>{e.preventDefault();openLeaderboard();},{passive:false});
 
+// Change player button
+const btnChangePlayer = document.getElementById('btnChangePlayer');
+function doChangePlayer(){
+  try { localStorage.removeItem(PLAYER_KEY); } catch {}
+  location.reload();
+}
+btnChangePlayer.addEventListener('click', doChangePlayer);
+btnChangePlayer.addEventListener('touchend', e=>{e.preventDefault();doChangePlayer();},{passive:false});
+
 // ═══════════════════════════════════════════════════════
 // USERNAME SCREEN
 // ═══════════════════════════════════════════════════════
@@ -2365,48 +2420,54 @@ function initUsernameStars(){
   animS2();
 }
 
+const PLAYER_KEY = 'nur_al_iman_player_v2';
+
+function getSavedPlayer() {
+  try { return JSON.parse(localStorage.getItem(PLAYER_KEY)); } catch { return null; }
+}
+function savePlayerLocally(username) {
+  try { localStorage.setItem(PLAYER_KEY, JSON.stringify({username, ts: Date.now()})); } catch {}
+}
+
 async function initUsernameScreen(){
   initUsernameStars();
-  const entries=await lbLoad();
-  if(entries.length>0){
-    const savedList=document.getElementById('unSavedList');
-    const savedItems=document.getElementById('unSavedItems');
-    savedList.style.display='block';
-    savedItems.innerHTML=entries.slice(0,5).map(e=>`
-      <div class="un-saved-item" data-name="${e.username}">
-        <div class="un-saved-avatar">${getAvatar(e.username)}</div>
-        <div class="un-saved-info">
-          <div class="un-saved-name">${e.username}</div>
-          <div class="un-saved-rank">${e.rank||'Thalibul Ilmi'} · Lv.${e.level}</div>
-        </div>
-        <div class="un-saved-score">${e.xp} XP</div>
-      </div>`).join('');
-    savedItems.querySelectorAll('.un-saved-item').forEach(el=>{
-      const tap=()=>enterGame(el.dataset.name);
-      el.addEventListener('click',tap);
-      el.addEventListener('touchend',e=>{e.preventDefault();tap();},{passive:false});
-    });
+
+  // Check if this device already has a saved player
+  const saved = getSavedPlayer();
+  if (saved && saved.username) {
+    // Returning player: skip to title directly after brief welcome
+    currentUsername = saved.username;
+    document.getElementById('usernameScreen').style.display = 'none';
+    document.getElementById('titleScreen').classList.add('active');
+    getAC(); playSfx('interact');
+    setTimeout(initStars, 50);
+    return;
   }
-  const submit=()=>{
-    const val=document.getElementById('unInput').value.trim();
-    if(!val){
-      document.getElementById('unInput').style.borderColor='#E74C3C';
-      setTimeout(()=>{document.getElementById('unInput').style.borderColor='';},800);
+
+  // New player on this device: show name input only (no other users list)
+  document.getElementById('unSavedList').style.display = 'none';
+
+  const submit = () => {
+    const val = document.getElementById('unInput').value.trim();
+    if (!val) {
+      document.getElementById('unInput').style.borderColor = '#E74C3C';
+      setTimeout(() => { document.getElementById('unInput').style.borderColor = ''; }, 800);
       return;
     }
+    savePlayerLocally(val);
     enterGame(val);
   };
-  document.getElementById('unSubmit').addEventListener('click',submit);
-  document.getElementById('unSubmit').addEventListener('touchend',e=>{e.preventDefault();submit();},{passive:false});
-  document.getElementById('unInput').addEventListener('keydown',e=>{if(e.key==='Enter')submit();});
+  document.getElementById('unSubmit').addEventListener('click', submit);
+  document.getElementById('unSubmit').addEventListener('touchend', e => { e.preventDefault(); submit(); }, { passive: false });
+  document.getElementById('unInput').addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
 }
 
 function enterGame(username){
-  currentUsername=username.substring(0,16);
-  document.getElementById('usernameScreen').style.display='none';
+  currentUsername = username.substring(0, 16);
+  savePlayerLocally(currentUsername);
+  document.getElementById('usernameScreen').style.display = 'none';
   document.getElementById('titleScreen').classList.add('active');
   getAC(); playSfx('interact');
-  // Small delay so titleScreen is rendered before canvas size is read
   setTimeout(initStars, 50);
 }
 
@@ -2527,15 +2588,34 @@ function startGame(){
   gameState.camX=player.x-VIEW_W/2;
   gameState.camY=player.y-VIEW_H/2;
   requestAnimationFrame(loop);
-  setTimeout(()=>{
-    showToast(`Bismillah ${currentUsername}! Jelajahi Makkah 🕌`);
-    setTimeout(updateZoneHeader, 600);
-  },500);
+  // Show Makkah intro on first play, skip if returning
+  const introKey = 'nur_al_iman_intro_shown_v1';
+  const introShown = localStorage.getItem(introKey);
+  if (!introShown) {
+    gameState.running = false;
+    document.getElementById('introOverlay').classList.add('show');
+  } else {
+    setTimeout(()=>{
+      showToast(`Bismillah ${currentUsername}! Jelajahi Makkah 🕌`);
+      setTimeout(updateZoneHeader, 600);
+    }, 500);
+  }
   saveProgress();
   updateZoneHeader();
 }
 document.getElementById('btnStart').addEventListener('click',()=>{getAC();playSfx('interact');startGame();});
 document.getElementById('btnStart').addEventListener('touchend',e=>{e.preventDefault();getAC();playSfx('interact');startGame();},{passive:false});
+
+// Intro overlay button
+function closeIntro(){
+  try { localStorage.setItem('nur_al_iman_intro_shown_v1', '1'); } catch {}
+  document.getElementById('introOverlay').classList.remove('show');
+  gameState.running = true;
+  showToast(`Bismillah ${currentUsername}! Jelajahi Makkah 🕌`);
+  setTimeout(updateZoneHeader, 600);
+}
+document.getElementById('introBtn').addEventListener('click', closeIntro);
+document.getElementById('introBtn').addEventListener('touchend', e=>{e.preventDefault();closeIntro();},{passive:false});
 
 // ── BOOT ──
 document.getElementById('usernameScreen').style.display='flex';
