@@ -16,8 +16,8 @@
   display:none;flex-direction:column;align-items:center;justify-content:center;
   gap:0; padding:24px;
 }
-.un-title{font-size:14px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
-.un-sub{font-size:11px;color:var(--text2);letter-spacing:2px;margin-bottom:32px;text-align:center;line-height:1.6;}
+.un-title{font-size:18px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
+.un-sub{font-size:14px;color:var(--text2);letter-spacing:1px;margin-bottom:32px;text-align:center;line-height:1.6;}
 .un-input-wrap{position:relative;width:100%;max-width:280px;margin-bottom:10px;}
 .un-input{
   width:100%;padding:16px 18px;
@@ -29,18 +29,18 @@
 }
 .un-input:focus{border-color:var(--gold2);background:rgba(180,140,60,0.12);box-shadow:0 0 20px rgba(180,140,60,0.2);}
 .un-input::placeholder{color:rgba(180,140,60,0.3);}
-.un-hint{font-size:10px;color:var(--text2);margin-bottom:28px;letter-spacing:1px;}
+.un-hint{font-size:13px;color:var(--text2);margin-bottom:28px;letter-spacing:1px;}
 .un-btn{
   background:linear-gradient(135deg,var(--gold3),var(--gold));
   color:#1A0E00;border:none;font-family:'Cinzel',serif;
-  font-size:14px;font-weight:700;letter-spacing:3px;
+  font-size:16px;font-weight:700;letter-spacing:3px;
   padding:16px 48px;cursor:pointer;
   clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0% calc(100% - 8px),0% 8px);
   transition:all .2s;margin-bottom:16px;
 }
 .un-btn:active{transform:scale(0.95);}
 .un-saved-list{width:100%;max-width:280px;}
-.un-saved-title{font-size:9px;color:var(--text2);letter-spacing:2px;margin-bottom:8px;text-align:center;}
+.un-saved-title{font-size:12px;color:var(--text2);letter-spacing:2px;margin-bottom:8px;text-align:center;}
 .un-saved-item{
   display:flex;align-items:center;gap:10px;
   padding:10px 14px;margin-bottom:6px;
@@ -50,9 +50,9 @@
 .un-saved-item:active{background:rgba(180,140,60,0.1);}
 .un-saved-avatar{font-size:18px;}
 .un-saved-info{flex:1;}
-.un-saved-name{font-size:12px;color:var(--text);letter-spacing:1px;}
-.un-saved-rank{font-size:9px;color:var(--text2);margin-top:2px;}
-.un-saved-score{font-size:11px;color:var(--gold);font-weight:700;}
+.un-saved-name{font-size:14px;color:var(--text);letter-spacing:1px;}
+.un-saved-rank{font-size:12px;color:var(--text2);margin-top:2px;}
+.un-saved-score{font-size:13px;color:var(--gold);font-weight:700;}
 
 /* ─── LEADERBOARD ─── */
 #lbOverlay{
@@ -76,7 +76,7 @@
 .lb-title-wrap{display:flex;align-items:center;gap:10px;}
 .lb-trophy{font-size:24px;filter:drop-shadow(0 0 8px rgba(200,160,60,0.6));}
 .lb-title{font-size:16px;color:var(--gold2);}
-.lb-sub{font-size:10px;color:var(--text2);margin-top:2px;}
+.lb-sub{font-size:12px;color:var(--text2);margin-top:2px;}
 .lb-close{
   width:32px;height:32px;background:rgba(255,255,255,0.05);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
@@ -109,12 +109,12 @@
 .lb-rank-n{color:var(--text2);}
 .lb-avatar{font-size:22px;flex-shrink:0;}
 .lb-info{flex:1;min-width:0;}
-.lb-name{font-size:13px;color:var(--text);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.lb-rank-title{font-size:9px;color:var(--text2);margin-top:2px;}
-.lb-me-badge{font-size:8px;color:var(--gold);margin-left:6px;letter-spacing:1px;}
+.lb-name{font-size:14px;color:var(--text);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-rank-title{font-size:11px;color:var(--text2);margin-top:2px;}
+.lb-me-badge{font-size:10px;color:var(--gold);margin-left:6px;letter-spacing:1px;}
 .lb-scores{text-align:right;flex-shrink:0;}
-.lb-xp{font-size:14px;font-weight:700;color:var(--purple);}
-.lb-meta{font-size:9px;color:var(--text2);margin-top:2px;}
+.lb-xp{font-size:15px;font-weight:700;color:var(--purple);}
+.lb-meta{font-size:11px;color:var(--text2);margin-top:2px;}
 .lb-quests{color:var(--green);}
 .lb-empty{text-align:center;padding:32px;color:var(--text2);font-size:12px;line-height:1.8;}
 
@@ -144,14 +144,14 @@
   transition:all .15s;flex-shrink:0;
 }
 #btnLb:active{background:rgba(180,140,60,0.25);}
-.lb-btn-lbl{font-size:8px;letter-spacing:1px;color:var(--text2);}
+.lb-btn-lbl{font-size:10px;letter-spacing:1px;color:var(--text2);}
 
 
 :root{
   --gold:#C9A84C;--gold2:#F0D080;--gold3:#7A5510;
   --deep:#070C18;--panel:rgba(6,12,28,0.96);
   --border:rgba(180,140,60,0.35);--border2:rgba(180,140,60,0.65);
-  --text:#D8C898;--text2:#807850;
+  --text:#D8C898;--text2:#B8A870;
   --green:#4CAF75;--red:#E74C3C;--blue:#3498DB;--purple:#9B59B6;
 }
 
@@ -201,7 +201,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 
 /* TOP HUD */
 #topHud{
-  height:52px;flex-shrink:0;
+  height:60px;flex-shrink:0;
   background:var(--panel);border-bottom:1px solid var(--border);
   display:flex;align-items:center;gap:10px;padding:0 12px;
   position:relative;z-index:10;
@@ -210,18 +210,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
 .hud-bars{flex:1;display:flex;flex-direction:column;gap:4px;}
 .bar-row{display:flex;align-items:center;gap:6px;}
-.bar-icon{font-size:9px;width:10px;text-align:center;}
-.bar-track{flex:1;height:7px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.05);overflow:hidden;}
+.bar-icon{font-size:11px;width:12px;text-align:center;}
+.bar-track{flex:1;height:9px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.05);overflow:hidden;}
 .bar-fill{height:100%;transition:width .4s cubic-bezier(.4,0,.2,1);}
 .fill-hp{background:linear-gradient(90deg,#7B0000,#E74C3C);}
 .fill-xp{background:linear-gradient(90deg,#4A1A7B,#9B59B6);}
-.bar-val{font-size:8px;color:var(--text2);font-family:monospace;width:28px;text-align:right;}
+.bar-val{font-size:11px;color:var(--text2);font-family:monospace;width:34px;text-align:right;}
 .hud-level{text-align:center;flex-shrink:0;}
-.lv-num{font-size:22px;font-weight:900;color:var(--gold2);line-height:1;text-shadow:0 0 15px rgba(200,160,60,0.5);}
-.lv-lbl{font-size:7px;color:var(--text2);letter-spacing:1px;}
+.lv-num{font-size:24px;font-weight:900;color:var(--gold2);line-height:1;text-shadow:0 0 15px rgba(200,160,60,0.5);}
+.lv-lbl{font-size:10px;color:var(--text2);letter-spacing:1px;}
 .hud-coins{text-align:center;flex-shrink:0;}
-.coin-num{font-size:16px;font-weight:700;color:var(--gold);}
-.coin-lbl{font-size:7px;color:var(--text2);}
+.coin-num{font-size:18px;font-weight:700;color:var(--gold);}
+.coin-lbl{font-size:10px;color:var(--text2);}
 
 /* CANVAS AREA */
 #canvasWrap{flex:1;position:relative;overflow:hidden;background:#0A1505;}
@@ -282,7 +282,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 }
 #btnInteract:active{background:radial-gradient(circle,rgba(200,160,60,0.4),rgba(200,160,60,0.1));box-shadow:0 0 30px rgba(200,160,60,0.5);}
 .act-icon{font-size:20px;}
-.act-lbl{font-size:7px;color:var(--text2);letter-spacing:1px;margin-top:1px;}
+.act-lbl{font-size:10px;color:var(--text2);letter-spacing:1px;margin-top:1px;}
 #btnInteract .act-lbl{color:var(--gold);}
 
 /* SPRINT TOGGLE */
@@ -296,7 +296,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 #btnSprint.active{background:rgba(100,200,100,0.2);border-color:var(--green);box-shadow:0 0 12px rgba(76,175,117,0.4);}
 #btnSprint:active{transform:scale(0.88);}
 .sprint-icon{font-size:16px;}
-.sprint-lbl{font-size:7px;color:var(--text2);letter-spacing:1px;}
+.sprint-lbl{font-size:10px;color:var(--text2);letter-spacing:1px;}
 
 /* QUEST BADGE STRIP */
 #questStrip{
@@ -306,13 +306,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   z-index:9;overflow-x:auto;
 }
 .qs-tier-label{
-  font-size:8px;color:var(--gold3);letter-spacing:1px;
+  font-size:11px;color:var(--gold3);letter-spacing:1px;
   padding:2px 6px;flex-shrink:0;align-self:center;
   border-left:2px solid var(--gold3);margin-left:4px;
 }
 .qs-chip{
   display:flex;align-items:center;gap:5px;padding:4px 10px;flex-shrink:0;
-  border:1px solid;font-size:9px;letter-spacing:0.5px;
+  border:1px solid;font-size:12px;letter-spacing:0.5px;
   transition:all .2s;
 }
 .qs-chip.open{border-color:rgba(180,140,60,0.5);color:var(--gold);background:rgba(180,140,60,0.08);}
@@ -331,15 +331,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   background:rgba(180,140,60,0.1);border:1px solid var(--border2);
   display:flex;align-items:center;justify-content:center;
 }
-.dlg-name{font-size:13px;color:var(--gold2);font-weight:700;}
-.dlg-title{font-size:10px;color:var(--text2);margin-top:2px;}
+.dlg-name{font-size:15px;color:var(--gold2);font-weight:700;}
+.dlg-title{font-size:12px;color:var(--text2);margin-top:2px;}
 .dlg-arabic{
   font-family:'Scheherazade New',serif;font-size:20px;
   color:var(--gold2);direction:rtl;text-align:right;
   margin-bottom:8px;line-height:1.8;display:none;
 }
-.dlg-text{font-size:13px;line-height:1.65;color:var(--text);margin-bottom:8px;}
-.dlg-tap{font-size:9px;color:rgba(160,140,90,0.5);letter-spacing:2px;animation:blk 1s infinite;}
+.dlg-text{font-size:15px;line-height:1.65;color:var(--text);margin-bottom:8px;}
+.dlg-tap{font-size:12px;color:rgba(200,180,120,0.7);letter-spacing:2px;animation:blk 1s infinite;}
 @keyframes blk{0%,100%{opacity:1;}50%{opacity:0.2;}}
 
 /* ─── QUEST MODAL ─── */
@@ -363,7 +363,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 .qm-htop{display:flex;align-items:center;gap:12px;}
 .qm-icon{font-size:28px;filter:drop-shadow(0 0 10px rgba(200,160,60,0.5));}
 .qm-htitle{font-size:16px;color:var(--gold2);}
-.qm-hsub{font-size:11px;color:var(--text2);margin-top:3px;}
+.qm-hsub{font-size:13px;color:var(--text2);margin-top:3px;}
 .qm-body{padding:16px 18px;}
 
 .ayat-card{
@@ -374,37 +374,37 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   font-family:'Scheherazade New',serif;font-size:24px;
   color:var(--gold2);direction:rtl;text-align:right;line-height:2;margin-bottom:8px;
 }
-.ay-latin{font-size:11px;color:#C4A55A;font-style:italic;margin-bottom:6px;}
-.ay-trans{font-size:12px;color:var(--text);line-height:1.6;
+.ay-latin{font-size:13px;color:#C4A55A;font-style:italic;margin-bottom:6px;}
+.ay-trans{font-size:14px;color:var(--text);line-height:1.6;
   border-top:1px solid var(--border);padding-top:8px;margin-top:8px;}
 
 .npc-hint{
   display:flex;gap:10px;padding:10px 14px;margin-bottom:16px;
   background:rgba(42,92,63,0.12);border:1px solid rgba(76,175,117,0.2);
-  font-size:12px;color:#90CCA0;line-height:1.5;
+  font-size:13px;color:#90CCA0;line-height:1.5;
 }
 .nh-icon{font-size:18px;flex-shrink:0;}
 
-.q-question{font-size:14px;color:var(--gold2);margin-bottom:14px;line-height:1.5;}
+.q-question{font-size:16px;color:var(--gold2);margin-bottom:14px;line-height:1.5;}
 .q-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
 .q-opt{
   display:flex;align-items:center;gap:12px;padding:14px 16px;
   background:rgba(255,255,255,0.03);border:1px solid var(--border);
-  font-size:13px;color:var(--text);cursor:pointer;width:100%;text-align:left;
+  font-size:15px;color:var(--text);cursor:pointer;width:100%;text-align:left;
   transition:all .15s;-webkit-tap-highlight-color:transparent;
 }
 .q-opt:active{transform:scale(0.98);}
 .q-opt.correct{background:rgba(42,92,63,0.3);border-color:var(--green);color:var(--green);}
 .q-opt.wrong{background:rgba(192,57,43,0.2);border-color:var(--red);color:#E07060;}
 .opt-letter{
-  width:26px;height:26px;border:1px solid currentColor;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  width:30px;height:30px;border:1px solid currentColor;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;
 }
 .q-result{text-align:center;padding:0 4px;}
 .res-ok{font-size:18px;color:var(--green);margin-bottom:6px;}
 .res-ng{font-size:16px;color:#E07060;margin-bottom:6px;}
 .res-xp{font-size:20px;color:var(--purple);font-weight:700;margin:8px 0;}
-.res-exp{font-size:12px;color:#90CCA0;line-height:1.6;margin-bottom:16px;}
+.res-exp{font-size:14px;color:#90CCA0;line-height:1.6;margin-bottom:16px;}
 .btn-claim{
   width:100%;padding:16px;
   background:linear-gradient(135deg,var(--gold3),var(--gold));
@@ -1841,21 +1841,25 @@ function openQuestModal(npc){
     <div class="q-options" id="qOptWrap"></div>
     <div id="qResult"></div>
   `;
+  // Shuffle options (Fisher-Yates) so correct answer isn't always position B
+  const idx=[0,1,2,3].slice(0,q.opts.length);
+  for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]];}
+  const shCorrect=idx.indexOf(q.correct);
   // Attach options via JS (no inline onclick) to avoid closure issues
   const optWrap=document.getElementById('qOptWrap');
-  q.opts.forEach((o,i)=>{
+  idx.forEach((origI,dispI)=>{
     const btn=document.createElement('button');
     btn.className='q-opt';
-    btn.innerHTML=`<span class="opt-letter">${letters[i]}</span>${o}`;
-    btn.addEventListener('touchend', e=>{ e.preventDefault(); answerQ(i, btn, q); }, {passive:false});
-    btn.addEventListener('click', ()=>answerQ(i, btn, q));
+    btn.innerHTML=`<span class="opt-letter">${letters[dispI]}</span>${q.opts[origI]}`;
+    btn.addEventListener('touchend', e=>{ e.preventDefault(); answerQ(dispI, btn, shCorrect, q); }, {passive:false});
+    btn.addEventListener('click', ()=>answerQ(dispI, btn, shCorrect, q));
     optWrap.appendChild(btn);
   });
   document.getElementById('questModal').classList.add('open');
   playSfx('open');
 }
 
-function answerQ(chosen, btn, q) {
+function answerQ(chosen, btn, correctIdx, q) {
   if(questAnswered) return; // prevent double-tap
   if(!curQuestNpc || !q) return; // guard
   questAnswered=true;
@@ -1868,12 +1872,12 @@ function answerQ(chosen, btn, q) {
   });
   // Re-mark correct after clone (querySelectorAll again)
   document.querySelectorAll('.q-opt').forEach((b,i)=>{
-    if(i===q.correct) b.classList.add('correct');
-    if(i===chosen && chosen!==q.correct) b.classList.add('wrong');
+    if(i===correctIdx) b.classList.add('correct');
+    if(i===chosen && chosen!==correctIdx) b.classList.add('wrong');
   });
 
   const res=document.getElementById('qResult');
-  const ok=chosen===q.correct;
+  const ok=chosen===correctIdx;
 
   // Snapshot npc reference for closures
   const npcSnap=curQuestNpc;
@@ -2042,27 +2046,48 @@ function playSfx(n){
 }
 
 // ═══════════════════════════════════════════════════════
-// LEADERBOARD — localStorage persistence
+// LEADERBOARD — Netlify Function (shared across all devices) + localStorage fallback
 // ═══════════════════════════════════════════════════════
+const LB_API='/.netlify/functions/leaderboard';
 const LB_KEY='nurAlIman_leaderboard_v1';
 let currentUsername='';
 
-function lbLoad(){
+async function lbLoad(){
+  try{
+    const res=await fetch(LB_API);
+    if(res.ok){const data=await res.json();if(Array.isArray(data)&&data.length>=0)return data;}
+  }catch(e){}
   try{return JSON.parse(localStorage.getItem(LB_KEY))||[];}catch(e){return[];}
 }
-function lbSave(entries){
-  try{localStorage.setItem(LB_KEY,JSON.stringify(entries));}catch(e){}
+
+async function lbSaveEntry(entry){
+  // Write locally for fast username-screen access
+  try{
+    const local=JSON.parse(localStorage.getItem(LB_KEY))||[];
+    const li=local.findIndex(e=>e.username===entry.username);
+    if(li>=0)local[li]=entry;else local.push(entry);
+    local.sort((a,b)=>b.questsDone-a.questsDone||b.xp-a.xp);
+    localStorage.setItem(LB_KEY,JSON.stringify(local));
+  }catch(e){}
+  // Write to shared serverless API
+  try{
+    await fetch(LB_API,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(entry),
+    });
+  }catch(e){}
 }
+
 function getTotalXp(){
   let total=0,thresh=100;
   for(let i=1;i<player.level;i++){total+=thresh;thresh=Math.floor(thresh*1.6);}
   return total+player.xp;
 }
-function saveProgress(){
+
+async function saveProgress(){
   if(!currentUsername)return;
-  const entries=lbLoad();
-  const idx=entries.findIndex(e=>e.username===currentUsername);
-  const entry={
+  await lbSaveEntry({
     username:currentUsername,
     level:player.level,
     xp:getTotalXp(),
@@ -2070,13 +2095,10 @@ function saveProgress(){
     coins:player.coins,
     rank:player.ranks[Math.min(player.level-1,player.ranks.length-1)],
     ts:Date.now(),
-  };
-  if(idx>=0)entries[idx]=entry; else entries.push(entry);
-  entries.sort((a,b)=>b.questsDone-a.questsDone||b.xp-a.xp);
-  lbSave(entries);
+  });
 }
 
-// Patch gainXP to auto-save
+// Patch gainXP to auto-save (fire-and-forget async)
 const _gainXP=gainXP;
 gainXP=function(amt){_gainXP(amt);saveProgress();};
 
@@ -2089,20 +2111,13 @@ function getAvatar(name){
   return AVATARS[h%AVATARS.length];
 }
 
-function openLeaderboard(){
-  if(gameState.dialogOpen||gameState.questOpen)return;
-  gameState.running=false;
-  const entries=lbLoad();
-  const podiumEl=document.getElementById('lbPodium');
-  const bodyEl=document.getElementById('lbBody');
-
+function renderLeaderboard(entries,podiumEl,bodyEl){
   if(entries.length===0){
     podiumEl.style.display='none';
     bodyEl.innerHTML=`<div class="lb-empty">Belum ada pemain lain.<br>Jadilah yang pertama menyelesaikan quest! 🌟<br><br>Selesaikan quest, skormu akan tersimpan otomatis.</div>`;
   } else {
     podiumEl.style.display='flex';
     const top3=entries.slice(0,3);
-    // Podium order: 2nd left, 1st center, 3rd right
     const slots=top3.length>=3?[top3[1],top3[0],top3[2]]:top3.length===2?[top3[1],top3[0]]:[top3[0]];
     const cls=top3.length>=3?['podium-2','podium-1','podium-3']:top3.length===2?['podium-2','podium-1']:['podium-1'];
     const crowns=top3.length>=3?['🥈','👑','🥉']:top3.length===2?['🥈','👑']:['👑'];
@@ -2118,8 +2133,6 @@ function openLeaderboard(){
         <div class="podium-block">${realNums[pi]}</div>
       </div>`;
     }).join('');
-
-    // Rows 4+
     bodyEl.innerHTML=entries.length<=3?'':entries.slice(3).map((e,i)=>{
       const pos=i+4,isMe=e.username===currentUsername;
       return `<div class="lb-row ${isMe?'me':''}">
@@ -2135,13 +2148,11 @@ function openLeaderboard(){
         </div>
       </div>`;
     }).join('');
-
-    // Append my row if outside top view
     const myPos=entries.findIndex(e=>e.username===currentUsername)+1;
     if(myPos>3&&myPos>3+Math.max(0,entries.length-3)){
       const me=entries[myPos-1];
       if(me) bodyEl.innerHTML+=`
-        <div style="text-align:center;padding:6px 0;font-size:9px;color:var(--text2);letter-spacing:1px">— Posisimu —</div>
+        <div style="text-align:center;padding:6px 0;font-size:11px;color:var(--text2);letter-spacing:1px">— Posisimu —</div>
         <div class="lb-row me">
           <div class="lb-rank-num lb-rank-n">${myPos}</div>
           <div class="lb-avatar">${getAvatar(currentUsername)}</div>
@@ -2156,8 +2167,19 @@ function openLeaderboard(){
         </div>`;
     }
   }
+}
+
+async function openLeaderboard(){
+  if(gameState.dialogOpen||gameState.questOpen)return;
+  gameState.running=false;
+  const podiumEl=document.getElementById('lbPodium');
+  const bodyEl=document.getElementById('lbBody');
+  podiumEl.style.display='none';
+  bodyEl.innerHTML=`<div class="lb-empty">⏳ Memuat papan peringkat...</div>`;
   document.getElementById('lbOverlay').classList.add('open');
   playSfx('open');
+  const entries=await lbLoad();
+  renderLeaderboard(entries,podiumEl,bodyEl);
 }
 
 function closeLeaderboard(){
