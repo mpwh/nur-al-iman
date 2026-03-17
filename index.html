@@ -237,10 +237,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 
 /* D-PAD */
 #dpad{
-  width:136px;height:136px;position:relative;flex-shrink:0;
+  width:148px;height:148px;position:relative;flex-shrink:0;
 }
 .dp-btn{
-  position:absolute;width:44px;height:44px;
+  position:absolute;width:48px;height:48px;
   background:rgba(180,140,60,0.08);
   border:1px solid rgba(180,140,60,0.25);
   display:flex;align-items:center;justify-content:center;
@@ -254,12 +254,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   color:rgba(240,210,100,0.9);
   transform:scale(0.92);
 }
-.dp-up{left:46px;top:0;border-radius:4px 4px 0 0;}
-.dp-down{left:46px;bottom:0;border-radius:0 0 4px 4px;}
-.dp-left{left:0;top:46px;border-radius:4px 0 0 4px;}
-.dp-right{right:0;top:46px;border-radius:0 4px 4px 0;}
+.dp-up{left:50px;top:0;border-radius:4px 4px 0 0;}
+.dp-down{left:50px;bottom:0;border-radius:0 0 4px 4px;}
+.dp-left{left:0;top:50px;border-radius:4px 0 0 4px;}
+.dp-right{right:0;top:50px;border-radius:0 4px 4px 0;}
 .dp-center{
-  left:46px;top:46px;
+  left:50px;top:50px;
   background:rgba(180,140,60,0.05);
   border:1px solid rgba(180,140,60,0.15);
   border-radius:2px;
@@ -268,7 +268,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 /* ACTION BUTTONS */
 #actionBtns{display:flex;flex-direction:column;gap:12px;align-items:center;}
 .act-btn{
-  width:62px;height:62px;border-radius:50%;border:2px solid;
+  width:70px;height:70px;border-radius:50%;border:2px solid;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   cursor:pointer;transition:all .08s;
   user-select:none;-webkit-user-select:none;
@@ -281,8 +281,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   box-shadow:0 0 20px rgba(200,160,60,0.2);
 }
 #btnInteract:active{background:radial-gradient(circle,rgba(200,160,60,0.4),rgba(200,160,60,0.1));box-shadow:0 0 30px rgba(200,160,60,0.5);}
-.act-icon{font-size:20px;}
-.act-lbl{font-size:10px;color:var(--text2);letter-spacing:1px;margin-top:1px;}
+.act-icon{font-size:24px;}
+.act-lbl{font-size:11px;color:var(--text2);letter-spacing:1px;margin-top:1px;}
 #btnInteract .act-lbl{color:var(--gold);}
 
 /* SPRINT TOGGLE */
@@ -331,14 +331,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   background:rgba(180,140,60,0.1);border:1px solid var(--border2);
   display:flex;align-items:center;justify-content:center;
 }
-.dlg-name{font-size:15px;color:var(--gold2);font-weight:700;}
+.dlg-name{font-size:16px;color:var(--gold2);font-weight:700;}
 .dlg-title{font-size:12px;color:var(--text2);margin-top:2px;}
 .dlg-arabic{
   font-family:'Scheherazade New',serif;font-size:20px;
   color:var(--gold2);direction:rtl;text-align:right;
   margin-bottom:8px;line-height:1.8;display:none;
 }
-.dlg-text{font-size:15px;line-height:1.65;color:var(--text);margin-bottom:8px;}
+.dlg-text{font-size:16px;line-height:1.65;color:#E8D8A8;margin-bottom:8px;}
 .dlg-tap{font-size:12px;color:rgba(200,180,120,0.7);letter-spacing:2px;animation:blk 1s infinite;}
 @keyframes blk{0%,100%{opacity:1;}50%{opacity:0.2;}}
 
@@ -375,7 +375,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   color:var(--gold2);direction:rtl;text-align:right;line-height:2;margin-bottom:8px;
 }
 .ay-latin{font-size:13px;color:#C4A55A;font-style:italic;margin-bottom:6px;}
-.ay-trans{font-size:14px;color:var(--text);line-height:1.6;
+.ay-trans{font-size:15px;color:var(--text);line-height:1.6;
   border-top:1px solid var(--border);padding-top:8px;margin-top:8px;}
 
 .npc-hint{
@@ -385,13 +385,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 }
 .nh-icon{font-size:18px;flex-shrink:0;}
 
-.q-question{font-size:16px;color:var(--gold2);margin-bottom:14px;line-height:1.5;}
+.q-question{font-size:17px;color:var(--gold2);margin-bottom:14px;line-height:1.5;}
 .q-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
 .q-opt{
   display:flex;align-items:center;gap:12px;padding:14px 16px;
   background:rgba(255,255,255,0.03);border:1px solid var(--border);
   font-size:15px;color:var(--text);cursor:pointer;width:100%;text-align:left;
-  transition:all .15s;-webkit-tap-highlight-color:transparent;
+  transition:all .15s;-webkit-tap-highlight-color:transparent;min-height:52px;
 }
 .q-opt:active{transform:scale(0.98);}
 .q-opt.correct{background:rgba(42,92,63,0.3);border-color:var(--green);color:var(--green);}
@@ -446,6 +446,40 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 }
 @keyframes tIn{from{transform:translateY(-20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 @keyframes tOut{from{opacity:1;}to{opacity:0;transform:translateY(-10px);}}
+
+/* ─── ZONE HEADER ─── */
+#zoneHeader{
+  position:absolute;top:60px;left:0;right:0;z-index:15;
+  display:none;
+  background:linear-gradient(to bottom,rgba(5,10,25,0.95),rgba(5,10,25,0));
+  padding:10px 16px 20px;
+  pointer-events:none;
+}
+#zoneHeader.show{display:block;}
+.zh-zone{font-size:10px;color:var(--text2);letter-spacing:4px;text-transform:uppercase;}
+.zh-name{font-size:16px;color:var(--gold2);font-weight:700;margin-top:2px;letter-spacing:2px;}
+.zh-tier{font-size:11px;color:var(--text2);margin-top:2px;}
+
+/* ─── MAP TRANSITION SCREEN ─── */
+#mapTransition{
+  position:absolute;inset:0;z-index:95;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at center,#0D1F3C,#020509);
+  padding:32px;text-align:center;
+}
+#mapTransition.show{display:flex;}
+.mt-icon{font-size:64px;margin-bottom:16px;animation:moonFloat 2s ease-in-out infinite;}
+.mt-title{font-size:13px;color:var(--gold);letter-spacing:4px;margin-bottom:8px;}
+.mt-name{font-size:22px;font-weight:700;color:var(--gold2);margin-bottom:12px;letter-spacing:2px;}
+.mt-desc{font-size:14px;color:var(--text);line-height:1.7;margin-bottom:28px;max-width:300px;}
+.mt-btn{
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  color:#1A0E00;border:none;font-family:'Cinzel',serif;
+  font-size:14px;font-weight:700;letter-spacing:3px;
+  padding:16px 48px;cursor:pointer;
+  clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0% calc(100% - 8px),0% 8px);
+}
+.mt-mt-btn:active{transform:scale(0.96);}
 
 /* ─── FLOATING XP ─── */
 .fxp{
@@ -577,6 +611,22 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
 
     <div id="toastWrap"></div>
 
+    <!-- ZONE HEADER -->
+    <div id="zoneHeader">
+      <div class="zh-zone">Zona</div>
+      <div class="zh-name" id="zhName">Makkah Al-Mukarramah</div>
+      <div class="zh-tier" id="zhTier">Tier 1 · Masa Awal Kenabian</div>
+    </div>
+
+    <!-- MAP TRANSITION -->
+    <div id="mapTransition">
+      <div class="mt-icon" id="mtIcon">🕌</div>
+      <div class="mt-title">PERJALANAN BARU</div>
+      <div class="mt-name" id="mtName">Perjalanan Hijrah</div>
+      <div class="mt-desc" id="mtDesc">Selamat! Kamu telah menyelesaikan semua pelajaran di Makkah. Kini saatnya hijrah...</div>
+      <button class="mt-btn" id="mtBtn">Lanjutkan Perjalanan →</button>
+    </div>
+
     <!-- LEADERBOARD -->
     <div id="lbOverlay">
       <div class="lb-sheet">
@@ -667,7 +717,64 @@ window.addEventListener('resize', resizeCanvas);
 // MAP  (0=void 1=deep_grass 2=grass 3=path 4=wall 5=tree
 //        6=water 7=flower 8=sand 9=mosque 10=rock)
 // ═══════════════════════════════════════════════════════
-const MAP = [
+// Zone 1: Makkah (existing map kept as-is)
+const MAP_MAKKAH = [
+  [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+  [4,8,8,8,8,8,10,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,10,8,8,8,8,8,4],
+  [4,8,10,8,8,8,8,8,8,3,3,3,3,3,3,9,9,9,9,3,3,3,8,8,8,8,8,10,8,8,8,4],
+  [4,8,8,10,8,8,8,8,8,3,9,9,9,9,9,9,9,9,9,9,9,3,8,8,10,8,8,8,8,8,8,4],
+  [4,8,8,8,8,8,10,8,8,3,9,9,9,9,9,9,9,9,9,9,9,3,8,8,8,8,10,8,8,8,8,4],
+  [4,8,8,8,8,8,8,8,8,3,9,9,9,9,9,9,9,9,9,9,9,3,8,8,8,8,8,8,8,10,8,4],
+  [4,10,8,8,8,8,8,8,8,3,9,9,9,9,9,9,9,9,9,9,9,3,8,8,8,8,8,8,8,8,10,4],
+  [4,8,8,10,8,8,8,8,8,3,3,3,3,9,9,9,9,3,3,3,3,3,8,8,10,8,8,8,8,8,8,4],
+  [4,8,8,8,8,8,8,8,8,8,8,8,3,9,9,9,9,3,8,8,8,8,8,8,8,8,8,8,8,8,8,4],
+  [4,8,8,8,8,10,8,8,8,8,8,8,3,9,9,9,9,3,8,8,8,8,8,8,8,10,8,8,8,8,8,4],
+  [4,8,8,8,8,8,8,8,8,8,10,10,10,10,10,10,10,10,10,10,8,8,8,8,8,8,8,8,10,8,8,4],
+  [4,8,10,8,8,8,8,8,8,8,10,10,10,10,10,10,10,10,10,10,8,8,8,8,8,8,10,8,8,8,8,4],
+  [4,8,8,8,8,8,8,8,8,8,8,8,3,3,3,3,3,3,8,8,8,8,8,8,8,8,8,8,8,8,8,4],
+  [4,8,8,10,8,8,8,8,8,8,8,8,3,8,8,8,8,3,8,8,8,8,10,8,8,8,8,8,8,8,8,4],
+  [4,8,8,8,8,10,8,8,8,8,8,8,3,8,8,8,8,3,8,8,8,8,8,8,10,8,8,8,8,8,8,4],
+  [4,8,8,8,8,8,8,8,8,8,8,8,3,8,8,8,8,3,8,8,8,8,8,8,8,8,8,8,8,10,8,4],
+  [4,10,8,8,8,8,8,8,8,10,8,8,3,3,3,3,3,3,8,8,10,8,8,8,8,8,8,8,8,8,8,4],
+  [4,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,10,8,8,8,4],
+  [4,8,8,10,8,8,10,8,8,8,8,8,8,8,8,8,8,8,8,8,10,8,8,8,8,8,8,8,8,8,8,4],
+  [4,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,10,4],
+  [4,8,10,8,8,8,8,8,8,8,10,8,8,8,8,8,8,8,8,10,8,8,8,8,8,10,8,8,8,8,8,4],
+  [4,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,4],
+  [4,8,8,8,8,10,8,8,8,8,8,8,8,10,8,8,8,8,8,8,8,8,8,8,8,8,8,8,10,8,8,4],
+  [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+];
+
+// Zone 2: Perjalanan Hijrah (rocky mountain path)
+const MAP_HIJRAH = [
+  [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+  [4,10,10,10,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,10,10,10,4],
+  [4,10,10,2,2,7,2,2,2,2,2,2,3,3,3,3,3,3,2,2,2,2,7,2,2,2,2,2,2,10,10,4],
+  [4,10,2,2,5,2,2,2,2,2,2,3,3,9,9,9,9,3,3,2,2,2,2,5,2,2,2,2,2,2,10,4],
+  [4,10,2,2,2,2,5,2,2,2,2,3,9,9,9,9,9,9,9,3,2,2,2,2,2,5,2,2,2,2,10,4],
+  [4,2,2,2,2,2,2,2,2,2,2,3,9,9,9,9,9,9,9,3,2,2,2,2,2,2,2,2,2,7,2,4],
+  [4,7,2,2,2,2,2,2,2,2,2,3,9,9,9,9,9,9,9,3,2,2,2,2,2,2,2,2,2,2,7,4],
+  [4,2,2,5,2,2,2,2,2,2,2,3,3,3,9,9,9,3,3,3,2,2,5,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,2,3,9,9,9,3,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,7,2,2,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,2,7,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,6,6,2,2,2,2,2,2,2,2,5,2,2,4],
+  [4,2,5,2,2,2,2,2,2,2,6,6,6,6,6,6,6,6,6,6,2,2,2,2,2,5,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,7,2,2,2,2,2,2,2,2,3,2,2,2,2,3,2,2,2,2,7,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,5,2,2,2,2,2,2,3,2,2,2,2,3,2,2,2,2,2,5,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,3,2,2,2,2,2,2,2,2,2,2,2,10,2,4],
+  [4,10,2,2,2,2,2,2,2,10,2,2,3,3,3,3,3,3,2,2,10,2,2,2,2,2,2,2,2,2,10,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,5,2,2,2,4],
+  [4,2,2,5,2,2,7,2,2,2,2,2,2,2,2,2,2,2,2,2,7,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,10,4],
+  [4,2,10,2,2,2,2,2,2,2,5,2,2,2,2,2,2,2,2,5,2,2,2,2,2,10,2,2,2,2,2,4],
+  [4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4],
+  [4,2,2,2,2,7,2,2,2,2,2,2,2,7,2,2,2,2,2,2,2,2,2,2,2,2,2,2,7,2,2,4],
+  [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+];
+
+// Zone 3: Madinah (lush, green, fertile)
+const MAP_MADINAH = [
   [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
   [4,2,2,2,2,2,7,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,7,2,2,2,2,2,4],
   [4,2,7,2,2,2,2,2,2,3,3,3,3,3,3,9,9,9,9,3,3,3,2,2,2,2,2,7,2,2,2,4],
@@ -696,9 +803,14 @@ const MAP = [
 
 const SOLID = new Set([4,5,6,10]);
 
+function getActiveMap(){
+  if(gameState.mapLevel===2) return MAP_HIJRAH;
+  if(gameState.mapLevel===3) return MAP_MADINAH;
+  return MAP_MAKKAH;
+}
 function tileAt(c,r){
   if(c<0||r<0||c>=COLS||r>=ROWS)return 4;
-  return MAP[r]?.[c]??4;
+  return getActiveMap()[r]?.[c]??4;
 }
 function isSolid(c,r){
   return SOLID.has(tileAt(c,r));
@@ -1048,8 +1160,8 @@ const QURAN = [
     latin:'Qul huwallāhu aḥad · Allāhuṣ-ṣamad · Lam yalid wa lam yūlad · Wa lam yakul lahū kufuwan aḥad',
     trans:'Katakanlah: Dialah Allah Yang Maha Esa. Allah tempat meminta. Tidak beranak dan tidak diperanakkan. Tiada yang setara dengan-Nya.',
     question:'Al-Ikhlāṣ setara dengan berapa bagian Al-Quran?',
-    opts:['Seperempat','Sepertiga','Setengah','Dua pertiga'],
-    correct:1,
+    opts:['Sepertiga','Seperempat','Dua pertiga','Setengah'],
+    correct:0,
     explanation:'Hadits shahih: Surah Al-Ikhlāṣ setara sepertiga Al-Quran karena isinya tentang tauhid — inti ajaran Islam.',
     xp:50, coins:20,
     hint:'Aku Bilal. Saat disiksa, aku ucap "Ahad Ahad..." — keesaan Allah adalah kekuatanku.',
@@ -1060,8 +1172,8 @@ const QURAN = [
     latin:'Allāhu lā ilāha illā huwal-Ḥayyul-Qayyūm · lā taʾkhudhuhū sinatun wa lā nawm',
     trans:'Allah, tidak ada tuhan selain Dia. Mahahidup, terus mengurus makhluk-Nya, tidak mengantuk dan tidak tidur.',
     question:'"Al-Ḥayyu al-Qayyūm" artinya?',
-    opts:['Maha Bijaksana dan Adil','Mahahidup, Maha mengurus tanpa henti','Maha Mendengar dan Melihat','Maha Kuat dan Perkasa'],
-    correct:1,
+    opts:['Maha Mendengar dan Melihat','Maha Kuat dan Perkasa','Mahahidup, Maha mengurus tanpa henti','Maha Bijaksana dan Adil'],
+    correct:2,
     explanation:'Al-Ḥayyu = Mahahidup sempurna abadi. Al-Qayyūm = Maha mengurus seluruh ciptaan tanpa pernah tidur.',
     xp:60, coins:25,
     hint:'Ayat Kursi adalah ayat teragung Al-Quran. Siapa membacanya setelah shalat, tidak ada penghalang masuk surga kecuali kematian.',
@@ -1074,8 +1186,8 @@ const QURAN = [
     latin:'Qul aʿūdhu bi-Rabbil-falaq · min sharri mā khalaq · wa min sharri ghāsiqin idhā waqab',
     trans:'Katakanlah: Aku berlindung kepada Tuhan yang menguasai subuh. Dari kejahatan makhluk-Nya. Dan dari kejahatan malam apabila telah gelap.',
     question:'Al-Falaq artinya?',
-    opts:['Matahari terbenam','Subuh / fajar yang membelah','Bintang bersinar','Angin malam'],
-    correct:1,
+    opts:['Angin malam','Bintang bersinar','Matahari terbenam','Subuh / fajar yang membelah'],
+    correct:3,
     explanation:'Al-Falaq = subuh atau fajar, cahaya yang membelah kegelapan malam. Surah ini mengajarkan kita meminta perlindungan Allah dari segala kejahatan.',
     xp:70, coins:28,
     hint:'Aku Umar. Rasulullah ﷺ mengajariku: Baca Al-Falaq dan An-Nās setiap pagi dan sore sebagai perlindungan.',
@@ -1086,8 +1198,8 @@ const QURAN = [
     latin:'Qul aʿūdhu bi-Rabbin-nās · Malikin-nās · Ilāhin-nās · min sharril-waswāsil-khannās',
     trans:'Katakanlah: Aku berlindung kepada Tuhannya manusia. Raja manusia. Sembahan manusia. Dari kejahatan bisikan setan yang bersembunyi.',
     question:'"Al-Waswāsil-Khannās" adalah?',
-    opts:['Malaikat penjaga','Setan yang membisikkan kejahatan lalu bersembunyi','Manusia jahat','Jin yang baik'],
-    correct:1,
+    opts:['Setan yang membisikkan kejahatan lalu bersembunyi','Malaikat penjaga','Jin yang baik','Manusia jahat'],
+    correct:0,
     explanation:'Al-Waswās = pembisik kejahatan. Al-Khannās = yang bersembunyi (setan lari ketika manusia berdzikir kepada Allah).',
     xp:70, coins:28,
     hint:'Nabi ﷺ setiap pagi membaca Al-Mu\'awwidzatain (Al-Falaq & An-Nās) tiga kali, meniupnya ke telapak tangan lalu mengusap tubuh.',
@@ -1098,8 +1210,8 @@ const QURAN = [
     latin:'Ar-Rahmānir-Rahīm · Māliki yawmid-dīn',
     trans:'Yang Maha Pengasih, Maha Penyayang. Pemilik hari pembalasan.',
     question:'"Māliki yawmid-dīn" artinya?',
-    opts:['Penguasa hari ini','Pemilik hari pembalasan / kiamat','Raja dunia','Hakim seluruh manusia'],
-    correct:1,
+    opts:['Penguasa hari ini','Hakim seluruh manusia','Raja dunia','Pemilik hari pembalasan / kiamat'],
+    correct:3,
     explanation:'Yawmid-Dīn = Hari Kiamat / hari pembalasan. Allah satu-satunya pemilik dan hakim di hari itu. Tidak ada kekuasaan lain selain-Nya.',
     xp:75, coins:30,
     hint:'Aku Aisyah. Nabi ﷺ sering mengulang ayat ini dalam shalat malam, merenungi bahwa kelak kita semua akan kembali kepada-Nya.',
@@ -1110,7 +1222,7 @@ const QURAN = [
     latin:'Iyyāka naʿbudu wa iyyāka nastaʿīn · Ihdinaṣ-ṣirāṭal-mustaqīm',
     trans:'Hanya kepada Engkau kami menyembah dan hanya kepada Engkau kami memohon pertolongan. Tunjukilah kami jalan yang lurus.',
     question:'Apa isi doa "Ihdinaṣ-ṣirāṭal-mustaqīm"?',
-    opts:['Meminta kekayaan','Meminta jalan yang lurus / petunjuk Allah','Meminta perlindungan dari musuh','Meminta umur panjang'],
+    opts:['Meminta perlindungan dari musuh','Meminta jalan yang lurus / petunjuk Allah','Meminta kekayaan','Meminta umur panjang'],
     correct:1,
     explanation:'Ini adalah doa terpenting dalam Al-Fatihah — kita memohon hidayah (petunjuk) jalan yang lurus kepada Allah. Doa ini kita ulangi minimal 17 kali sehari dalam shalat.',
     xp:75, coins:30,
@@ -1124,8 +1236,8 @@ const QURAN = [
     latin:'Alif-Lām-Mīm · Dhālikal-kitābu lā rayba fīh · hudan lil-muttaqīn',
     trans:'Alif Lam Mim. Kitab (Al-Quran) ini tidak ada keraguan padanya; petunjuk bagi mereka yang bertakwa.',
     question:'Al-Quran disebut "hudan lil-muttaqīn" artinya?',
-    opts:['Bacaan bagi orang kaya','Petunjuk bagi orang-orang yang bertakwa','Kitab hukum dunia','Tulisan para ulama'],
-    correct:1,
+    opts:['Kitab hukum dunia','Tulisan para ulama','Bacaan bagi orang kaya','Petunjuk bagi orang-orang yang bertakwa'],
+    correct:3,
     explanation:'Al-Quran adalah petunjuk (huda) bagi al-muttaqīn = orang-orang bertakwa, yang menjaga diri dari hal yang dilarang Allah dan melaksanakan perintah-Nya.',
     xp:90, coins:40,
     hint:'Aku Zaid bin Tsabit. Akulah yang ditugaskan mengumpulkan Al-Quran menjadi mushaf. Setiap ayat dicatat dengan teliti — tidak ada satu huruf pun yang terlewat.',
@@ -1136,7 +1248,7 @@ const QURAN = [
     latin:'Inna fī khalqis-samāwāti wal-arḍi wakhtilāfil-layli wan-nahāri la-āyātin li-ulil-albāb',
     trans:'Sesungguhnya dalam penciptaan langit dan bumi, serta pergantian malam dan siang, terdapat tanda-tanda bagi orang yang berakal.',
     question:'"Ulul Albāb" dalam ayat ini berarti?',
-    opts:['Orang yang kaya','Orang yang berakal dan merenung','Pemimpin umat','Orang yang kuat fisik'],
+    opts:['Pemimpin umat','Orang yang berakal dan merenung','Orang yang kaya','Orang yang kuat fisik'],
     correct:1,
     explanation:'Ulul Albāb = orang-orang yang memiliki akal budi, yang menggunakan pikirannya untuk merenungkan tanda-tanda kebesaran Allah di alam semesta.',
     xp:90, coins:40,
@@ -1148,8 +1260,8 @@ const QURAN = [
     latin:'Wa idh qāla Luqmānu li-bnihi wa huwa yaʿiẓuhū yā bunayya lā tusyrik billāh · innaṣ-syirka la-ẓulmun ʿaẓīm',
     trans:'Dan ingatlah ketika Luqman berkata kepada anaknya sambil memberi nasihat: "Wahai anakku! Janganlah kamu menyekutukan Allah. Sungguh, menyekutukan Allah adalah kezaliman yang besar."',
     question:'Nasihat pertama Luqman kepada anaknya adalah?',
-    opts:['Rajin belajar','Jangan syirik / menyekutukan Allah','Hormati orang tua','Banyak bersedekah'],
-    correct:1,
+    opts:['Banyak bersedekah','Rajin belajar','Hormati orang tua','Jangan syirik / menyekutukan Allah'],
+    correct:3,
     explanation:'Wasiat pertama Luqman adalah tauhid — jangan syirik. Syirik adalah dosa terbesar karena menyamakan makhluk dengan Al-Khaliq (Pencipta).',
     xp:100, coins:45,
     hint:'Aku Salman Al-Farisi. Aku menempuh perjalanan jauh dari Persia mencari kebenaran. Nasihat Luqman inilah inti dari semua pencarian — jaga tauhidmu.',
@@ -1160,8 +1272,8 @@ const QURAN = [
     latin:'Wa qaḍā Rabbuka allā taʿbudū illā iyyāhu wa bil-wālidayni iḥsānā',
     trans:'Dan Tuhanmu telah memerintahkan agar kamu jangan menyembah selain Dia dan hendaklah berbuat baik kepada ibu bapak.',
     question:'Dua perintah utama dalam ayat ini adalah?',
-    opts:['Shalat dan puasa','Tauhid (hanya menyembah Allah) dan berbakti kepada orang tua','Zakat dan haji','Jihad dan ilmu'],
-    correct:1,
+    opts:['Zakat dan haji','Jihad dan ilmu','Shalat dan puasa','Tauhid (hanya menyembah Allah) dan berbakti kepada orang tua'],
+    correct:3,
     explanation:'Allah menggandengkan tauhid (ibadah hanya kepada-Nya) dengan birrul walidain (berbakti kepada orang tua) — menunjukkan betapa tingginya kedudukan orang tua dalam Islam.',
     xp:100, coins:45,
     hint:'Aku Abdullah bin Masud. Aku bertanya kepada Nabi ﷺ: "Amalan apa yang paling dicintai Allah?" Beliau menjawab: "Shalat tepat waktu, kemudian berbakti kepada orang tua."',
@@ -1383,6 +1495,8 @@ const gameState = {
   frame: 0,
   npc: {},   // id -> {done}
   camX: 0, camY: 0,
+  mapLevel: 1, // 1=Makkah, 2=Hijrah, 3=Madinah
+  transitioning: false,
 };
 NPCS.forEach(n => gameState.npc[n.id] = {done:false});
 
@@ -1470,6 +1584,7 @@ function worldSolid(wx, wy) {
   const r = Math.floor(wy / T);
   if(isSolid(c,r)) return true;
   for(const npc of NPCS){
+    if(npc.tier !== gameState.mapLevel) continue;
     if(c===npc.tileX && r===npc.tileY) return true;
   }
   return false;
@@ -1575,6 +1690,16 @@ function drawMosqueDeco(cx, cy) {
 function render() {
   ctx.clearRect(0, 0, VIEW_W, VIEW_H);
 
+  // Map-specific background tint
+  if(gameState.mapLevel===1){
+    ctx.fillStyle='#1A0E05'; // Makkah - warm dark desert
+  } else if(gameState.mapLevel===2){
+    ctx.fillStyle='#0A1210'; // Hijrah - dark rocky
+  } else {
+    ctx.fillStyle='#061508'; // Madinah - dark lush green
+  }
+  ctx.fillRect(0,0,VIEW_W,VIEW_H);
+
   const camX = Math.floor(gameState.camX);
   const camY = Math.floor(gameState.camY);
 
@@ -1614,8 +1739,9 @@ function render() {
     }
   }
 
-  // NPCs
+  // NPCs — only show current tier/zone
   for (const npc of NPCS) {
+    if(npc.tier !== gameState.mapLevel) continue;
     const sx = npc.tileX * T - camX;
     const sy = npc.tileY * T - camY;
     if (sx<-20||sx>VIEW_W+20||sy<-20||sy>VIEW_H+20) continue;
@@ -1646,14 +1772,18 @@ function render() {
     const pdx = Math.abs(player.x - (npc.tileX*T+T/2));
     const pdy = Math.abs(player.y - (npc.tileY*T+T/2));
     if (pdx < T*3 && pdy < T*3) {
-      const tw = npc.name.length * 4 + 6;
+      ctx.font='bold 9px Arial, sans-serif';
+      const tw = ctx.measureText(npc.name).width + 10;
       const tx = sx + 7 - tw/2;
-      const ty = sy - 14;
-      ctx.fillStyle='rgba(5,10,25,0.9)';
-      ctx.fillRect(tx, ty, tw, 10);
+      const ty = sy - 18;
+      ctx.fillStyle='rgba(5,10,25,0.93)';
+      ctx.fillRect(tx-1, ty-1, tw+2, 13);
+      ctx.strokeStyle='rgba(180,140,60,0.5)';
+      ctx.lineWidth=0.5;
+      ctx.strokeRect(tx-1, ty-1, tw+2, 13);
       ctx.fillStyle='#F0D080';
-      ctx.font='6px monospace'; ctx.textAlign='left';
-      ctx.fillText(npc.name.substring(0,18), tx+3, ty+8);
+      ctx.textAlign='left';
+      ctx.fillText(npc.name, tx+4, ty+9);
     }
   }
 
@@ -1730,6 +1860,7 @@ function tryInteract() {
   const pr = Math.floor(player.y/T);
 
   for(const npc of NPCS){
+    if(npc.tier !== gameState.mapLevel) continue;
     if(Math.abs(npc.tileX-pc)<=1 && Math.abs(npc.tileY-pr)<=1){
       startDialog(npc); return;
     }
@@ -1919,6 +2050,7 @@ function closeQuestModal(){
   gameState.questOpen=false; gameState.running=true;
   curQuestNpc=null; questAnswered=false;
   updateHUD();
+  checkTierComplete();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1970,12 +2102,13 @@ function updateHUD(){
 }
 function updateQuestStrip(){
   const strip=document.getElementById('questStrip');
-  const tierLabels={1:'⭐ Tier 1',2:'⭐⭐ Tier 2',3:'⭐⭐⭐ Tier 3'};
+  const tierLabels={1:'🕌 Makkah',2:'🐪 Hijrah',3:'🌴 Madinah'};
   let html='';
+  // Only show current and completed tiers
   [1,2,3].forEach(tier=>{
+    if(tier > gameState.mapLevel) return; // Don't show future tiers
     const tierNpcs=NPCS.filter(n=>n.tier===tier);
     const doneCount=tierNpcs.filter(n=>gameState.npc[n.id]?.done).length;
-    const allDone=doneCount===tierNpcs.length;
     html+=`<div class="qs-tier-label">${tierLabels[tier]} (${doneCount}/${tierNpcs.length})</div>`;
     tierNpcs.forEach(n=>{
       const q=QURAN.find(q=>q.id===n.questId);
@@ -2053,11 +2186,24 @@ const LB_KEY='nurAlIman_leaderboard_v1';
 let currentUsername='';
 
 async function lbLoad(){
+  let apiData = null;
   try{
     const res=await fetch(LB_API);
-    if(res.ok){const data=await res.json();if(Array.isArray(data)&&data.length>=0)return data;}
+    if(res.ok){const data=await res.json();if(Array.isArray(data)) apiData=data;}
   }catch(e){}
-  try{return JSON.parse(localStorage.getItem(LB_KEY))||[];}catch(e){return[];}
+  // Get local data
+  let localData = [];
+  try{localData=JSON.parse(localStorage.getItem(LB_KEY))||[];}catch(e){}
+  // If API returned data, merge with local (API is authoritative but add local entry if missing)
+  if(apiData !== null && apiData.length >= 0){
+    // Merge: prefer API data, but add current user's local data if not in API list
+    const apiUsernames = new Set(apiData.map(e=>e.username));
+    const extra = localData.filter(e => !apiUsernames.has(e.username));
+    const merged = [...apiData, ...extra];
+    merged.sort((a,b)=>(b.questsDone||0)-(a.questsDone||0)||(b.xp||0)-(a.xp||0));
+    return merged;
+  }
+  return localData;
 }
 
 async function lbSaveEntry(entry){
@@ -2219,9 +2365,9 @@ function initUsernameStars(){
   animS2();
 }
 
-function initUsernameScreen(){
+async function initUsernameScreen(){
   initUsernameStars();
-  const entries=lbLoad();
+  const entries=await lbLoad();
   if(entries.length>0){
     const savedList=document.getElementById('unSavedList');
     const savedItems=document.getElementById('unSavedItems');
@@ -2295,6 +2441,80 @@ function initStars(){
 function loop(){update();render();requestAnimationFrame(loop);}
 
 // ═══════════════════════════════════════════════════════
+// ZONE / MAP SYSTEM
+// ═══════════════════════════════════════════════════════
+const ZONE_DATA = [
+  {level:1, icon:'🕌', name:'Makkah Al-Mukarramah', tier:'Tier 1 · Masa Awal Kenabian',
+   desc:'Era dakwah pertama Rasulullah ﷺ di Makkah. Bergabunglah bersama para sahabat mulia yang pertama memeluk Islam di tengah tekanan dan penganiayaan.',
+   nextDesc:'Selamat! Kamu telah menyelesaikan semua pelajaran Makkah. Kini saatnya Hijrah ke Madinah mengikuti jejak Rasulullah ﷺ dan para sahabat.',
+   spawnX: 10, spawnY: 12,
+  },
+  {level:2, icon:'🐪', name:'Perjalanan Hijrah', tier:'Tier 2 · Hijrah ke Madinah',
+   desc:'Meninggalkan Makkah dengan penuh keimanan. Di sinilah bertemu sahabat-sahabat yang memperkuat iman di perjalanan menuju Madinah.',
+   nextDesc:'MasyaAllah! Perjalanan hijrah selesai. Selamat datang di Madinah Al-Munawwarah — Kota Rasulullah ﷺ yang penuh cahaya!',
+   spawnX: 10, spawnY: 12,
+  },
+  {level:3, icon:'🌴', name:'Madinah Al-Munawwarah', tier:'Tier 3 · Era Madinah',
+   desc:'Madinah — kota cahaya tempat Islam berkembang sempurna. Pelajari hikmah para sahabat senior yang menjadi pilar peradaban Islam.',
+   nextDesc:'',
+   spawnX: 10, spawnY: 12,
+  },
+];
+
+function updateZoneHeader(){
+  const zd = ZONE_DATA[gameState.mapLevel - 1];
+  if(!zd) return;
+  document.getElementById('zhName').textContent = zd.name;
+  document.getElementById('zhTier').textContent = zd.tier;
+  const zh = document.getElementById('zoneHeader');
+  zh.classList.add('show');
+  setTimeout(()=>zh.classList.remove('show'), 3500);
+}
+
+function checkTierComplete(){
+  const tierNpcs = NPCS.filter(n => n.tier === gameState.mapLevel);
+  const allDone = tierNpcs.every(n => gameState.npc[n.id]?.done);
+  if(allDone && gameState.mapLevel < 3){
+    setTimeout(()=>showMapTransition(), 800);
+  }
+}
+
+function showMapTransition(){
+  const zd = ZONE_DATA[gameState.mapLevel - 1];
+  const nextZd = ZONE_DATA[gameState.mapLevel]; // next zone
+  if(!nextZd) return;
+  gameState.running = false;
+  gameState.transitioning = true;
+  document.getElementById('mtIcon').textContent = nextZd.icon;
+  document.getElementById('mtName').textContent = nextZd.name;
+  document.getElementById('mtDesc').textContent = zd.nextDesc;
+  document.getElementById('mapTransition').classList.add('show');
+  playSfx('levelup');
+}
+
+function doMapTransition(){
+  gameState.mapLevel++;
+  // Clear tile cache since map changed
+  Object.keys(tileCache).forEach(k => delete tileCache[k]);
+  // Reset player position
+  const zd = ZONE_DATA[gameState.mapLevel - 1];
+  player.x = zd.spawnX * T + T/2;
+  player.y = zd.spawnY * T + T/2;
+  gameState.camX = player.x - VIEW_W/2;
+  gameState.camY = player.y - VIEW_H/2;
+  document.getElementById('mapTransition').classList.remove('show');
+  gameState.running = true;
+  gameState.transitioning = false;
+  updateQuestStrip();
+  updateZoneHeader();
+  saveProgress();
+  showToast(`🌙 Selamat datang di ${zd.name}!`);
+}
+
+document.getElementById('mtBtn').addEventListener('click', doMapTransition);
+document.getElementById('mtBtn').addEventListener('touchend', e=>{e.preventDefault();doMapTransition();},{passive:false});
+
+// ═══════════════════════════════════════════════════════
 // START GAME
 // ═══════════════════════════════════════════════════════
 function startGame(){
@@ -2307,8 +2527,12 @@ function startGame(){
   gameState.camX=player.x-VIEW_W/2;
   gameState.camY=player.y-VIEW_H/2;
   requestAnimationFrame(loop);
-  setTimeout(()=>showToast(`Bismillah ${currentUsername}! Jelajahi Madinah 🌙`),500);
+  setTimeout(()=>{
+    showToast(`Bismillah ${currentUsername}! Jelajahi Makkah 🕌`);
+    setTimeout(updateZoneHeader, 600);
+  },500);
   saveProgress();
+  updateZoneHeader();
 }
 document.getElementById('btnStart').addEventListener('click',()=>{getAC();playSfx('interact');startGame();});
 document.getElementById('btnStart').addEventListener('touchend',e=>{e.preventDefault();getAC();playSfx('interact');startGame();},{passive:false});
