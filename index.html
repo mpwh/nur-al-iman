@@ -54,6 +54,49 @@
 .un-saved-rank{font-size:12px;color:var(--text2);margin-top:2px;}
 .un-saved-score{font-size:13px;color:var(--gold);font-weight:700;}
 
+/* ─── CHAR CUSTOMIZATION SCREEN ─── */
+#charScreen{
+  position:fixed;inset:0;z-index:112;
+  background:radial-gradient(ellipse 100% 80% at 50% 40%,#0D1F3C 0%,#050A12 100%);
+  display:none;flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:24px 20px 32px;overflow-y:auto;
+}
+#charScreen.active{display:flex;}
+.cs-title{font-size:16px;color:var(--gold);letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;margin-top:12px;}
+.cs-sub{font-size:12px;color:var(--text2);letter-spacing:1px;margin-bottom:16px;text-align:center;}
+#charPreview{
+  image-rendering:pixelated;image-rendering:crisp-edges;
+  width:120px;height:150px;
+  margin-bottom:18px;
+  border:1px solid var(--border);
+  background:rgba(180,140,60,0.05);
+  flex-shrink:0;
+}
+.cs-section{width:100%;max-width:300px;margin-bottom:14px;}
+.cs-label{font-size:10px;color:var(--text2);letter-spacing:2px;margin-bottom:8px;}
+.cs-swatches{display:flex;gap:8px;flex-wrap:wrap;}
+.cs-swatch{
+  width:34px;height:34px;border:2px solid transparent;
+  cursor:pointer;transition:border-color .15s,box-shadow .15s;flex-shrink:0;
+  clip-path:polygon(4px 0%,calc(100% - 4px) 0%,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0% calc(100% - 4px),0% 4px);
+}
+.cs-swatch.sel{border-color:var(--gold2);box-shadow:0 0 8px rgba(200,160,60,0.6);}
+.cs-toggle{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  color:var(--text);font-family:'Cinzel',serif;font-size:12px;letter-spacing:2px;
+  padding:10px 20px;cursor:pointer;transition:all .15s;
+}
+.cs-toggle.on{border-color:var(--gold);color:var(--gold);background:rgba(180,140,60,0.12);}
+.cs-confirm{
+  background:linear-gradient(135deg,var(--gold3),var(--gold));
+  color:#1A0E00;border:none;font-family:'Cinzel',serif;
+  font-size:15px;font-weight:700;letter-spacing:3px;
+  padding:14px 48px;cursor:pointer;margin-top:10px;flex-shrink:0;
+  clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0% calc(100% - 8px),0% 8px);
+  transition:transform .1s;
+}
+.cs-confirm:active{transform:scale(0.95);}
+
 /* ─── LEADERBOARD ─── */
 #lbOverlay{
   position:absolute;inset:0;z-index:70;
@@ -541,6 +584,36 @@ html,body{width:100%;height:100%;overflow:hidden;background:#050A10;font-family:
   </div>
 </div>
 
+<!-- ════ CHAR CUSTOMIZATION ════ -->
+<div id="charScreen">
+  <div class="t-moon" style="font-size:36px;margin-bottom:8px;flex-shrink:0;">☽</div>
+  <div class="cs-title">Pilih Penampilan</div>
+  <div class="cs-sub">Sesuaikan karakter penjelajahmu</div>
+  <canvas id="charPreview"></canvas>
+
+  <div class="cs-section">
+    <div class="cs-label">JUBAH</div>
+    <div class="cs-swatches" id="csRobeSwatches"></div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-label">SORBAN</div>
+    <div class="cs-swatches" id="csWrapSwatches"></div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-label">WARNA KULIT</div>
+    <div class="cs-swatches" id="csSkinSwatches"></div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-label">JENGGOT</div>
+    <button class="cs-toggle" id="csBeardBtn">✗ Tanpa Jenggot</button>
+  </div>
+
+  <button class="cs-confirm" id="csConfirm">▶ &nbsp;BISMILLAH!</button>
+</div>
+
 <!-- ════ TITLE ════ -->
 <div id="titleScreen">
   <canvas id="starsBg"></canvas>
@@ -738,7 +811,7 @@ const VIEWPORT_TILES_Y = 10;
 
 // Canvas
 const canvasEl = document.getElementById('gc');
-const ctx = canvasEl.getContext('2d');
+let ctx = canvasEl.getContext('2d');
 
 // We render at 2x internal resolution for crisp pixels
 const RES = 2;
@@ -1837,8 +1910,7 @@ function render() {
   const psx = Math.floor(player.x - camX - player.w/2);
   const psy = Math.floor(player.y - camY - player.h/2);
   drawCharacter(psx, psy-4, {
-    robeColor:'#F2EFE7', robeShade:'#D8D5CC',
-    headwrap:'#E8E8E0', headwrapAccent:'#3D7A22',
+    ...getCharCfg(),
     walkFrame: player.moving ? player.walkTimer : 0,
     facingUp: player.dir === 'up',
     scrollInHand: true,
@@ -2394,49 +2466,9 @@ function doChangePlayer(){
 btnChangePlayer.addEventListener('click', doChangePlayer);
 btnChangePlayer.addEventListener('touchend', e=>{e.preventDefault();doChangePlayer();},{passive:false});
 
-// ═══════════════════════════════════════════════════════
-// USERNAME SCREEN
-// ═══════════════════════════════════════════════════════
-function initUsernameStars(){
-  const sc=document.getElementById('starsBg2');
-  if(!sc)return;
-  sc.width=window.innerWidth;sc.height=window.innerHeight;
-  const c=sc.getContext('2d');
-  const stars=Array.from({length:80},()=>({
-    x:Math.random()*sc.width,y:Math.random()*sc.height,
-    r:Math.random()*1.2+0.3,ph:Math.random()*Math.PI*2,sp:0.012+Math.random()*0.018,
-  }));
-  function animS2(){
-    c.clearRect(0,0,sc.width,sc.height);
-    stars.forEach(s=>{
-      const a=0.25+Math.sin(s.ph)*0.35+0.25;
-      c.fillStyle=`rgba(255,240,200,${a})`;
-      c.beginPath();c.arc(s.x,s.y,s.r,0,Math.PI*2);c.fill();
-      s.ph+=s.sp;
-    });
-    const unEl=document.getElementById('usernameScreen');
-    if(unEl&&unEl.style.display!=='none') requestAnimationFrame(animS2);
-  }
-  animS2();
-}
-
-const PLAYER_KEY = 'nur_al_iman_player_v2';
-
-function getSavedPlayer() {
-  try { return JSON.parse(localStorage.getItem(PLAYER_KEY)); } catch { return null; }
-}
-function savePlayerLocally(username) {
-  try { localStorage.setItem(PLAYER_KEY, JSON.stringify({username, ts: Date.now()})); } catch {}
-}
-
-async function initUsernameScreen(){
-  initUsernameStars();
-
-  // Check if this device already has a saved player
-  const saved = getSavedPlayer();
-  if (saved && saved.username) {
-    // Returning player: skip to title directly after brief welcome
+    // Returning player: load char config and skip to title
     currentUsername = saved.username;
+    loadCharConfig();
     document.getElementById('usernameScreen').style.display = 'none';
     document.getElementById('titleScreen').classList.add('active');
     getAC(); playSfx('interact');
@@ -2466,9 +2498,7 @@ function enterGame(username){
   currentUsername = username.substring(0, 16);
   savePlayerLocally(currentUsername);
   document.getElementById('usernameScreen').style.display = 'none';
-  document.getElementById('titleScreen').classList.add('active');
-  getAC(); playSfx('interact');
-  setTimeout(initStars, 50);
+  showCharScreen();
 }
 
 // ═══════════════════════════════════════════════════════
